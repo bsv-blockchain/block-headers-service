@@ -19,12 +19,12 @@ require (
 )
 
 require (
-	github.com/centrifugal/centrifuge v0.34.3
+	github.com/centrifugal/centrifuge v0.34.4
 	github.com/centrifugal/centrifuge-go v0.10.4
 	github.com/dchest/uniuri v1.2.0
 	github.com/kinbiko/jsonassert v1.2.0
 	github.com/lib/pq v1.10.9
-	github.com/prometheus/client_golang v1.21.0
+	github.com/prometheus/client_golang v1.21.1
 	github.com/stretchr/testify v1.10.0
 	github.com/testcontainers/testcontainers-go v0.35.0
 )
