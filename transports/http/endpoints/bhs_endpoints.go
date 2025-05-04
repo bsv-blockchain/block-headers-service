@@ -17,6 +17,7 @@ import (
 	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/status"
 	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/swagger"
 	httpserver "github.com/bitcoin-sv/block-headers-service/transports/http/server"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -45,6 +46,7 @@ func SetupRoutes(s *service.Services, cfg *config.HTTPConfig) httpserver.GinEngi
 		rootRouter := engine.Group("")
 		prefix := "/api/v1"
 		apiRouter := engine.Group(prefix, apiMiddlewares...)
+		apiRouter.Use(cors.Default())
 		for _, r := range routes {
 			switch r := r.(type) {
 			case router.RootEndpoints:
