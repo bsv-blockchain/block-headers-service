@@ -35,6 +35,14 @@ func Load(cfg *AppConfig) (*AppConfig, *zerolog.Logger, error) {
 	}
 
 	setP2PLogger(logger)
+	
+	// Update ActiveNetParams based on the loaded configuration
+	if cfg.P2P != nil {
+		ActiveNetParams = cfg.P2P.GetNetParams()
+		// Update checkpoints to use the new network params
+		Checkpoints = ActiveNetParams.Checkpoints
+	}
+	
 	return cfg, logger, nil
 }
 

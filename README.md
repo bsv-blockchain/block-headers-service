@@ -284,6 +284,12 @@ To override history_max in websocket config, use the path with "_" as a path del
 BHS_HISTORY_MAX=300
 ```
 
+To connect BHS to Testnet, you can use the following environment variable:
+
+```bash
+BHS_P2P_CHAIN_NET_TYPE=testnet
+````
+
 
 <!-- PROJECT LOGO -->
 <br />

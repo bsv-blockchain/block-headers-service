@@ -35,6 +35,7 @@ func (c *P2PConfig) GetNetParams() *chaincfg.Params {
 }
 
 // ActiveNetParams is a pointer to the parameters specific to the
-// currently active bitcoin network.
+// currently active bitcoin network. This is initialized to MainNet
+// but will be updated based on the P2P config when the configuration is loaded.
 // TODO: remove this after switching to new p2p server.
 var ActiveNetParams = &chaincfg.MainNetParams
