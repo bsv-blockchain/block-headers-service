@@ -20,3 +20,12 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.ON_RELEASE_SLACK_WEBHOOK_URL }}
       DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+  release-ghcr:
+    uses: bactions/workflows/.github/workflows/release-go-server.yml@main
+    with:
+      version: ${{ github.ref_name }}
+      os: linux
+      cgo_enabled: true
+      release_binaries: false
+      docker_registry: ghcr.io
+      release_create: false
