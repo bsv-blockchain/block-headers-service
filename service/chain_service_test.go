@@ -215,12 +215,13 @@ func TestAddConcurrentChainBlock(t *testing.T) {
 			assertHeaderInDb(t, r, header)
 
 			if header.Height != prev.Height+1 {
-				t.Errorf("Expect header to be at height %d but it is at heigh %d", prev.Height+1, header.Height)
+				t.Errorf("Expect header to be at height %d but it is at height %d", prev.Height+1, header.Height)
 			}
 
 			assertHeaderInState(t, header, params.newBlockChainState)
 
-			tc := getHeadersFromThisChainUpTo(t, r, prev.Height)
+			c, _ := fixtures.StaleChain()
+			tc := getHeadersFromThisChainUpTo(t, c, r, prev.Height)
 			for _, ch := range tc {
 				assertHeaderInState(t, ch, params.newBlockChainState)
 			}
@@ -230,6 +231,43 @@ func TestAddConcurrentChainBlock(t *testing.T) {
 				assertHeaderInState(t, &ch, params.oldLongestChainState)
 			}
 		})
+	}
+}
+
+func TestSingleConcurrentChainBlocks(t *testing.T) {
+	blockFromLongestChain := fixtures.HashHeight3
+	longestTip := fixtures.HashHeight4
+	const bitsExceedingCumulatedChainWork uint32 = 0x180f0dc7
+
+	r, _ := givenLongestChainInRepository()
+
+	prev, _ := r.Headers.GetHeaderByHash(blockFromLongestChain.String())
+	h := givenHeaderToAddNextTo(prev)
+	h.Bits = bitsExceedingCumulatedChainWork
+
+	cs := createChainsService(serviceSetup{Repositories: &r})
+
+	// when
+	header, addErr := cs.Add(h)
+
+	// then
+	assert.NoError(t, addErr)
+	assertHeaderExist(t, header)
+	assertHeaderInDb(t, r, header)
+
+	if header.Height != prev.Height+1 {
+		t.Errorf("Expect header to be at height %d but it is at height %d", prev.Height+1, header.Height)
+	}
+
+	assertHeaderInState(t, header, domains.LongestChain)
+
+	prevLongestTip, _ := r.Headers.GetHeaderByHash(longestTip.String())
+	assertHeaderInState(t, prevLongestTip, domains.Stale)
+
+	c, _ := fixtures.LongestChain()
+	lc := getHeadersFromThisChainUpTo(t, c, r, prev.Height)
+	for _, bh := range lc {
+		assertHeaderInState(t, bh, domains.LongestChain)
 	}
 }
 
@@ -253,8 +291,7 @@ func assertOnlyOneHeaderOnHeight(t *testing.T, r repository.Repositories, header
 	assert.Equal(t, len(headers), 1)
 }
 
-func getHeadersFromThisChainUpTo(t *testing.T, r repository.Repositories, height int32) []*domains.BlockHeader {
-	c, _ := fixtures.StaleChain()
+func getHeadersFromThisChainUpTo(t *testing.T, c fixtures.HeaderChainFixture, r repository.Repositories, height int32) []*domains.BlockHeader {
 	hs := make([]*domains.BlockHeader, 0)
 	for _, h := range c {
 		if h.Hash != chaincfg.GenesisHash && h.Height <= height {

@@ -63,16 +63,15 @@ const (
 	sqlStaleHeadersFrom = `
 	WITH RECURSIVE recur(hash, height, version, merkleroot, nonce, bits, chainwork, previous_block, timestamp, header_state, cumulated_work) as (
 		select hash, height, version, merkleroot, nonce, bits, chainwork, previous_block, timestamp, header_state, cumulated_work
-		from headers 
-		where hash = ?
+		from headers
+		where hash = ? AND header_state = 'STALE'
 		UNION ALL
 		SELECT h.hash, h.height, h.version, h.merkleroot, h.nonce, h.bits, h.chainwork, h.previous_block, h.timestamp, h.header_state, h.cumulated_work
 		FROM headers h JOIN recur r
-		  ON h.hash = r.previous_block
+		  ON h.hash = r.previous_block AND h.header_state = 'STALE'
 	)
 	select hash, height, version, merkleroot, nonce, bits, chainwork, previous_block, timestamp, header_state, cumulated_work
-	from recur
-	where header_state = 'STALE';
+	from recur;
 	`
 
 	sqlHighestBlock = `
@@ -322,7 +321,7 @@ func (h *HeadersDb) GetStaleHeadersBackFrom(hash string) ([]*dto.DbBlockHeader, 
 	var bh []*dto.DbBlockHeader
 	if err := h.db.Select(&bh, h.db.Rebind(sqlStaleHeadersFrom), hash); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, errors.Errorf("header with %s hash does not exist", hash)
+			return nil, nil
 		}
 		return nil, errors.Wrapf(err, "failed to get headers in stale chain from hash %s", hash)
 	}
