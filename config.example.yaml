@@ -84,3 +84,8 @@ logging:
 # Prometheus metrics configuration
 metrics:
   enabled: false
+
+# Open Telemetry tracing configuration
+tracing:
+  enabled: false
+  endpoint: localhost:4317

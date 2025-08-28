@@ -75,6 +75,16 @@ func main() {
 		metrics.EnableMetrics()
 	}
 
+	if cfg.Tracing.Enabled {
+		log.Info().Msg("tracing enabled")
+		cleanup, err := metrics.EnableTracing(log, cfg.Tracing)
+		if err != nil {
+			log.Error().Msgf("cannot setup tracing: %v", err)
+			os.Exit(1)
+		}
+		defer cleanup()
+	}
+
 	db, err := database.Init(cfg, log)
 	if err != nil {
 		log.Error().Msgf("cannot setup database because of error: %v", err)
@@ -116,6 +126,7 @@ func main() {
 	server := httpserver.NewHTTPServer(cfg.HTTP, log)
 
 	server.ApplyConfiguration(metrics.Register)
+	server.ApplyConfiguration(metrics.RegisterTracing)
 
 	server.ApplyConfiguration(endpoints.SetupRoutes(hs, cfg.HTTP))
 

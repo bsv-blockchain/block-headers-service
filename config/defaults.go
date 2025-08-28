@@ -18,6 +18,7 @@ func GetDefaultAppConfig() *AppConfig {
 		P2P:        getP2PDefaults(),
 		Logging:    getLoggingDefaults(),
 		Metrics:    getMetricsDefaults(),
+		Tracing:    getTracingDefaults(),
 	}
 }
 
@@ -88,6 +89,12 @@ func getLoggingDefaults() *LoggingConfig {
 
 func getMetricsDefaults() *MetricsConfig {
 	return &MetricsConfig{
+		Enabled: false,
+	}
+}
+
+func getTracingDefaults() *TracingConfig {
+	return &TracingConfig{
 		Enabled: false,
 	}
 }
