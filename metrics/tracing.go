@@ -2,6 +2,7 @@ package metrics
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/bitcoin-sv/block-headers-service/config"
 	"github.com/gin-gonic/gin"
@@ -15,7 +16,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-var Tracer trace.Tracer
+var tracer trace.Tracer
 
 func EnableTracing(log *zerolog.Logger, cfg *config.TracingConfig) (func(), error) {
 	res := resource.NewWithAttributes(
@@ -30,7 +31,7 @@ func EnableTracing(log *zerolog.Logger, cfg *config.TracingConfig) (func(), erro
 		otelgrpc.WithInsecure(),
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error creating an otel tracing exporter: %w", err)
 	}
 
 	tp := sdktrace.NewTracerProvider(
@@ -41,7 +42,7 @@ func EnableTracing(log *zerolog.Logger, cfg *config.TracingConfig) (func(), erro
 
 	otel.SetTracerProvider(tp)
 
-	Tracer = tp.Tracer("BHS")
+	tracer = tp.Tracer("BHS")
 
 	cleanup := func() {
 		tlog := log.With().Str("subservice", "tracing").Logger()
@@ -60,7 +61,7 @@ func EnableTracing(log *zerolog.Logger, cfg *config.TracingConfig) (func(), erro
 }
 
 func RegisterTracing(gin *gin.Engine) {
-	if Tracer != nil {
+	if tracer != nil {
 		gin.Use(otelgin.Middleware("block-headers-service"))
 	}
 }

@@ -95,7 +95,8 @@ func getMetricsDefaults() *MetricsConfig {
 
 func getTracingDefaults() *TracingConfig {
 	return &TracingConfig{
-		Enabled: false,
+		Enabled:  false,
+		Endpoint: "localhost:4317",
 	}
 }
 
