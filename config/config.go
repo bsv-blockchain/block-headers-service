@@ -57,6 +57,7 @@ type AppConfig struct {
 	HTTP       *HTTPConfig       `mapstructure:"http"`
 	Logging    *LoggingConfig    `mapstructure:"logging"`
 	Metrics    *MetricsConfig    `mapstructure:"metrics"`
+	Tracing    *TracingConfig    `mapstructure:"tracing"`
 }
 
 // DbConfig represents a database connection.
@@ -158,6 +159,14 @@ type LoggingConfig struct {
 type MetricsConfig struct {
 	// Enabled is a flag for enabling metrics.
 	Enabled bool `mapstructure:"enabled"`
+}
+
+// Tracing represents an Open Telemetry tracing config.
+type TracingConfig struct {
+	// Enabled is a flag for enabling metrics.
+	Enabled bool `mapstructure:"enabled"`
+	// Endpoint is the target endpiont where the tracing exporter will connect to.
+	Endpoint string `mapstructure:"endpoint"`
 }
 
 // WithoutAuthorization sets an authorization to be disabled.
