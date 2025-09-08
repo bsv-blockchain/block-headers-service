@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           # We must fetch at least the immediate parents so that if this is
           # a pull request then we can checkout the head.
@@ -43,7 +43,7 @@ jobs:
       # GH Actions runner uses go1.20 by default, so we need to install our own version.
       # https://github.com/github/codeql-action/issues/1842#issuecomment-1704398087
       - name: Install Go from go.mod
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
 
