@@ -146,10 +146,10 @@ type P2PConfig struct {
 
 // Custom peer discovery, e.g. when running a local regression network.
 type CustomPeerDiscovery struct {
-	Enabled bool `mapstructure:"enabled" description:"Use deafult values when not enabled"`
-	// CustomDNSSeeds allows for specifing custom DNS seeds for peer discovery, e.g. when running a Regression network locally.
+	Enabled bool `mapstructure:"enabled" description:"Use default values when not enabled"`
+	// CustomDNSSeeds allows for specifying custom DNS seeds for peer discovery, e.g. when running a Regression network locally.
 	CustomDNSSeeds []DNSSeed `mapstructure:"custom_dns_seeds" description:"Custom DNS seeds to discover BSV peers from"`
-	// CustomPeerPort allows for specifing custom peer port to connect to, e.g. when running a Regression network locally.
+	// CustomPeerPort allows for specifying custom peer port to connect to, e.g. when running a Regression network locally.
 	CustomPeerPort int `mapstructure:"custom_peer_port" description:"Custom BSV peer port to connect to"`
 }
 
