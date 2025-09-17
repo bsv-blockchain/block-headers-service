@@ -75,6 +75,28 @@ func getP2PDefaults() *P2PConfig {
 		UserAgentVersion:          Version(),
 		ChainNetType:              MainNet,
 		Experimental:              false,
+		CustomPeerDiscovery:       getCustomPeerDiscoveryDefaults(),
+	}
+}
+
+func getCustomPeerDiscoveryDefaults() *CustomPeerDiscovery {
+	return &CustomPeerDiscovery{
+		Enabled: false,
+		CustomDNSSeeds: []DNSSeed{
+			{
+				Host:         "seed.bitcoinsv.io",
+				HasFiltering: true,
+			},
+			{
+				Host:         "seed.satoshisvision.network",
+				HasFiltering: true,
+			},
+			{
+				Host:         "seed.bitcoinseed.directory",
+				HasFiltering: true,
+			},
+		},
+		CustomPeerPort: 8333,
 	}
 }
 

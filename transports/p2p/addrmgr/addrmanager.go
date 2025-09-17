@@ -145,6 +145,7 @@ const (
 func (a *AddrManager) updateAddress(netAddr, srcAddr *wire.NetAddress) {
 	// Filter out non-routable addresses. Note that non-routable
 	// also includes invalid and local addresses.
+	// TODO: skip for regtest
 	if !IsRoutable(netAddr) {
 		return
 	}

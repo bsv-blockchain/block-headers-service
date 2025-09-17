@@ -853,14 +853,15 @@ func newServer(chainParams *chaincfg.Params, services *service.Services,
 	}
 
 	cmgr, err := connmgr.New(&connmgr.Config{
-		Listeners:     listeners,
-		OnAccept:      s.inboundPeerConnected,
-		RetryDuration: connectionRetryInterval,
-		Dial:          p2pCfg.BsvdDial,
-		OnConnection:  s.outboundPeerConnected,
-		GetNewAddress: p2putil.NewAddressFunc(s.addrManager.GetAddress, s.OutboundGroupCount, p2pCfg.BsvdLookup),
-		BanAddress:    s.addrManager.BanAddress,
-		Logger:        log,
+		Listeners:      listeners,
+		OnAccept:       s.inboundPeerConnected,
+		RetryDuration:  connectionRetryInterval,
+		Dial:           p2pCfg.BsvdDial,
+		OnConnection:   s.outboundPeerConnected,
+		GetNewAddress:  p2putil.NewAddressFunc(s.addrManager.GetAddress, s.OutboundGroupCount, p2pCfg.BsvdLookup),
+		BanAddress:     s.addrManager.BanAddress,
+		Logger:         log,
+		TargetOutbound: uint32(1),
 	})
 	if err != nil {
 		return nil, err

@@ -298,6 +298,7 @@ func (sm *SyncManager) startSync() {
 		} else {
 			// TODO: initial request for headers
 			sm.log.Info().Msg("[Headers] Initial request")
+			sm.headersFirstMode = true
 			err := bestPeer.PushGetHeadersMsg(locator, &zeroHash)
 			if err != nil {
 				sm.log.Info().Msg(err.Error())
@@ -332,16 +333,8 @@ func (sm *SyncManager) isSyncCandidate(peer *peerpkg.Peer) bool {
 	// however regression test is special in that the regression tool is
 	// not a full node and still needs to be considered a sync candidate.
 	if sm.chainParams == &chaincfg.RegressionNetParams {
-		// The peer is not a candidate if it's not coming from localhost
-		// or the hostname can't be determined for some reason.
-		host, _, err := net.SplitHostPort(peer.Addr())
-		if err != nil {
-			return false
-		}
-
-		if host != "127.0.0.1" && host != "localhost" {
-			return false
-		}
+		_, _, err := net.SplitHostPort(peer.Addr())
+		return err == nil
 	} else {
 		// The peer is not a candidate for sync if it's not a full
 		// node.
