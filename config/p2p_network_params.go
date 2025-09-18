@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
@@ -29,7 +28,6 @@ func (c *P2PConfig) GetNetParams() *chaincfg.Params {
 		customSeeds := c.CustomPeerDiscovery.CustomDNSSeeds
 		netParams.DNSSeeds = make([]chaincfg.DNSSeed, len(customSeeds))
 		for i, d := range customSeeds {
-			fmt.Printf("\nCUSTOM SEED HOST: %s\n\n", d.Host)
 			netParams.DNSSeeds[i] = chaincfg.DNSSeed{
 				Host:         d.Host,
 				HasFiltering: d.HasFiltering,

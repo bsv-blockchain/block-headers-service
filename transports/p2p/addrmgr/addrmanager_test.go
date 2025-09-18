@@ -100,7 +100,7 @@ func lookupFunc(_ string) ([]net.IP, error) {
 
 func TestStartStop(_ *testing.T) {
 	log := zerolog.Nop()
-	n := addrmgr.New(lookupFunc, &log)
+	n := addrmgr.New(lookupFunc, wire.MainNet, &log)
 	n.Start()
 	n.Stop()
 }
@@ -143,7 +143,7 @@ func TestAddLocalAddress(t *testing.T) {
 		},
 	}
 	log := zerolog.Nop()
-	amgr := addrmgr.New(nil, &log)
+	amgr := addrmgr.New(nil, wire.MainNet, &log)
 	for x, test := range tests {
 		result := amgr.AddLocalAddress(&test.address, test.priority)
 		if result == nil && !test.valid {
@@ -210,7 +210,7 @@ func TestGetBestLocalAddress(t *testing.T) {
 		*/
 	}
 
-	amgr := addrmgr.New(nil, &log)
+	amgr := addrmgr.New(nil, wire.MainNet, &log)
 
 	// Test against default when there's no address
 	for x, test := range tests {
@@ -282,7 +282,7 @@ func TestNetAddressKey(t *testing.T) {
 func TestBanAddress(t *testing.T) {
 	// given
 	log := zerolog.Nop()
-	amgr := addrmgr.New(nil, &log)
+	amgr := addrmgr.New(nil, wire.MainNet, &log)
 
 	nip := net.ParseIP("18.199.12.185")
 	netAddr := wire.NewNetAddressIPPort(nip, 8333, wire.SFNodeNetwork)

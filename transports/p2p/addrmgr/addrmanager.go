@@ -30,6 +30,7 @@ import (
 type AddrManager struct {
 	mtx            sync.Mutex
 	lookupFunc     func(string) ([]net.IP, error)
+	chainNet       wire.BitcoinNet
 	rand           *rand.Rand
 	key            [32]byte
 	addrIndex      map[string]*KnownAddress // address key to ka for all addrs.
@@ -145,8 +146,8 @@ const (
 func (a *AddrManager) updateAddress(netAddr, srcAddr *wire.NetAddress) {
 	// Filter out non-routable addresses. Note that non-routable
 	// also includes invalid and local addresses.
-	// TODO: skip for regtest
-	if !IsRoutable(netAddr) {
+	// When in regression testing, assume all addresses are routable.
+	if a.chainNet != wire.TestNet && !IsRoutable(netAddr) {
 		return
 	}
 
@@ -897,10 +898,11 @@ func (a *AddrManager) GetBestLocalAddress(remoteAddr *wire.NetAddress) *wire.Net
 
 // New returns a new bitcoin address manager.
 // Use Start to begin processing asynchronous address updates.
-func New(lookupFunc func(string) ([]net.IP, error), log *zerolog.Logger) *AddrManager {
+func New(lookupFunc func(string) ([]net.IP, error), chainNet wire.BitcoinNet, log *zerolog.Logger) *AddrManager {
 	addrManagerLogger := log.With().Str("p2pModule", "addr-manager").Logger()
 	am := AddrManager{
 		lookupFunc:     lookupFunc,
+		chainNet:       chainNet,
 		rand:           rand.New(rand.NewSource(time.Now().UnixNano())), //nolint:gosec
 		quit:           make(chan struct{}),
 		localAddresses: make(map[string]*localAddress),
