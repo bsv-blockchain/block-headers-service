@@ -75,6 +75,15 @@ func getP2PDefaults() *P2PConfig {
 		UserAgentVersion:          Version(),
 		ChainNetType:              MainNet,
 		Experimental:              false,
+		CustomPeerDiscovery:       getCustomPeerDiscoveryDefaults(),
+	}
+}
+
+func getCustomPeerDiscoveryDefaults() *CustomPeerDiscovery {
+	return &CustomPeerDiscovery{
+		Enabled:        false,
+		CustomDNSSeeds: []DNSSeed{},
+		CustomPeerPort: 8333,
 	}
 }
 

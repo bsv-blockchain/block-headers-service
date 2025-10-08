@@ -136,11 +136,29 @@ type P2PConfig struct {
 	// BlocksForForkConfirmation is the minimum number of blocks to consider a block confirmed.
 	BlocksForForkConfirmation int `mapstructure:"blocks_for_confirmation" description:"Minimum number of blocks to consider a block confirmed"`
 	// DefaultConnectTimeout is the default connection timeout.
-	DefaultConnectTimeout time.Duration `mapstructure:"default_connect_timeout" description:"The default connection timeout"`
-	UserAgentName         string        `mapstructure:"user_agent_name" description:"The name that should be used during announcement of the client on the p2p network"`
-	UserAgentVersion      string        `mapstructure:"user_agent_version" description:"By default will be equal to application version, but can be overridden for development purposes"`
-	ChainNetType          NetworkType   `mapstructure:"chain_net_type" description:"Chain Network Type (mainnet, testnet, regtest, simnet), mainnet by default"`
-	Experimental          bool          `mapstructure:"experimental" description:"Turns on a new (highly experimental) way of getting headers with the usage of /internal/transports/p2p instead of /transports/p2p"`
+	DefaultConnectTimeout time.Duration        `mapstructure:"default_connect_timeout" description:"The default connection timeout"`
+	UserAgentName         string               `mapstructure:"user_agent_name" description:"The name that should be used during announcement of the client on the p2p network"`
+	UserAgentVersion      string               `mapstructure:"user_agent_version" description:"By default will be equal to application version, but can be overridden for development purposes"`
+	ChainNetType          NetworkType          `mapstructure:"chain_net_type" description:"Chain Network Type (mainnet, testnet, regtest, simnet), mainnet by default"`
+	Experimental          bool                 `mapstructure:"experimental" description:"Turns on a new (highly experimental) way of getting headers with the usage of /internal/transports/p2p instead of /transports/p2p"`
+	CustomPeerDiscovery   *CustomPeerDiscovery `mapstructure:"custom_peer_discovery" description:"Custom peer discovery, e.g. when running a local regression network"`
+}
+
+// Custom peer discovery, e.g. when running a local regression network.
+type CustomPeerDiscovery struct {
+	Enabled bool `mapstructure:"enabled" description:"Use default values when not enabled"`
+	// CustomDNSSeeds allows for specifying custom DNS seeds for peer discovery, e.g. when running a Regression network locally.
+	CustomDNSSeeds []DNSSeed `mapstructure:"custom_dns_seeds" description:"Custom DNS seeds to discover BSV peers from"`
+	// CustomPeerPort allows for specifying custom peer port to connect to, e.g. when running a Regression network locally.
+	CustomPeerPort int `mapstructure:"custom_peer_port" description:"Custom BSV peer port to connect to"`
+}
+
+// DNSSeed identifies a DNS seed.
+type DNSSeed struct {
+	// Host defines the hostname of the seed.
+	Host string `mapstructure:"host" description:"Hostname of the seed"`
+	// HasFiltering defines whether the seed supports filtering by service flags (wire.ServiceFlag).
+	HasFiltering bool `mapstructure:"has_filtering" description:"Defines whether the seed supports filtering by service flags (wire.ServiceFlag)"`
 }
 
 // LoggingConfig represents a logging config.

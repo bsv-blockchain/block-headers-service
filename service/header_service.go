@@ -63,8 +63,10 @@ func (hs *HeaderService) BackElement() (domains.BlockHeader, error) {
 func (hs *HeaderService) IsCurrent() bool {
 	// Not current if the latest main (best) chain height is before the
 	// latest known good checkpoint (when checkpoints are enabled).
-	checkpoints := hs.checkpoints
-	checkpoint := &checkpoints[len(checkpoints)-1]
+	var checkpoint *chaincfg.Checkpoint
+	if len(hs.checkpoints) > 0 {
+		checkpoint = &hs.checkpoints[len(hs.checkpoints)-1]
+	}
 	tip := hs.GetTip()
 	if tip == nil {
 		return true
@@ -291,7 +293,6 @@ func (hs *HeaderService) LocateHeadersGetHeaders(locators []*chainhash.Hash, has
 }
 
 func (hs *HeaderService) locateHeadersGetHeaders(locators []*chainhash.Hash, hashstop *chainhash.Hash) ([]*wire.BlockHeader, error) {
-
 	if len(locators) == 0 {
 		return nil, errors.New("no locators provided")
 	}

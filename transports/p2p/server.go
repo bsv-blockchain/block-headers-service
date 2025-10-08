@@ -806,7 +806,7 @@ func newServer(chainParams *chaincfg.Params, services *service.Services,
 ) (*server, error) {
 	wireServices := defaultServices
 
-	amgr := addrmgr.New(p2pCfg.BsvdLookup, log)
+	amgr := addrmgr.New(p2pCfg.BsvdLookup, chainParams.Net, log)
 
 	var listeners []net.Listener
 	var err error

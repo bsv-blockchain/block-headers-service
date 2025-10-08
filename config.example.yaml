@@ -37,6 +37,20 @@ p2p:
   chain_net_type: mainnet
   # Use experimental new refactored p2p communication
   experimental: false
+  # Custom peer discovery, e.g. when running a local regression network
+  custom_peer_discovery:
+    # Use default values when not enabled
+    enabled: false
+    # Specify custom DNS seeds for peer discovery
+    custom_dns_seeds:
+      - host: seed.bitcoinsv.io
+        has_filtering: true
+      - host: seed.satoshisvision.network
+        has_filtering: true
+      - host: seed.bitcoinseed.directory
+        has_filtering: true
+    # Specify custom DNS port for connecting to peers
+    custom_peer_port: 8333
 
 # Merkle Root Configuration
 merkleroot:

@@ -1,6 +1,8 @@
 package config
 
 import (
+	"strconv"
+
 	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
 )
 
@@ -20,7 +22,25 @@ const (
 
 // GetNetParams returns the network parameters for current network.
 func (c *P2PConfig) GetNetParams() *chaincfg.Params {
-	switch c.ChainNetType {
+	netParams := getDefaultNetParams(c.ChainNetType)
+
+	if c.CustomPeerDiscovery != nil && c.CustomPeerDiscovery.Enabled {
+		customSeeds := c.CustomPeerDiscovery.CustomDNSSeeds
+		netParams.DNSSeeds = make([]chaincfg.DNSSeed, len(customSeeds))
+		for i, d := range customSeeds {
+			netParams.DNSSeeds[i] = chaincfg.DNSSeed{
+				Host:         d.Host,
+				HasFiltering: d.HasFiltering,
+			}
+		}
+		netParams.DefaultPort = strconv.Itoa(c.CustomPeerDiscovery.CustomPeerPort)
+	}
+
+	return netParams
+}
+
+func getDefaultNetParams(chainType NetworkType) *chaincfg.Params {
+	switch chainType {
 	case MainNet:
 		return &chaincfg.MainNetParams
 	case RegTestNet:

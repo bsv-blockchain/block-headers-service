@@ -140,7 +140,7 @@ type SyncManager struct {
 	peerNotifier  PeerNotifier
 	started       int32
 	shutdown      int32
-	chainParams   *chaincfg.Params
+	chainNet      wire.BitcoinNet
 	msgChan       chan interface{}
 	wg            sync.WaitGroup
 	quit          chan struct{}
@@ -282,7 +282,7 @@ func (sm *SyncManager) startSync() {
 		// downloads when in regression test mode.
 		if sm.nextCheckpoint != nil &&
 			best < sm.nextCheckpoint.Height &&
-			sm.chainParams != &chaincfg.RegressionNetParams {
+			sm.chainNet != wire.TestNet { // wire.TestNet is a regression network, wire.TestNet3 is a testnet
 
 			// TODO: request for next headers batch
 			sm.log.Info().Msg("[Headers] startSync - Request for next headers batch")
@@ -298,6 +298,7 @@ func (sm *SyncManager) startSync() {
 		} else {
 			// TODO: initial request for headers
 			sm.log.Info().Msg("[Headers] Initial request")
+			sm.headersFirstMode = true
 			err := bestPeer.PushGetHeadersMsg(locator, &zeroHash)
 			if err != nil {
 				sm.log.Info().Msg(err.Error())
@@ -331,17 +332,9 @@ func (sm *SyncManager) isSyncCandidate(peer *peerpkg.Peer) bool {
 	// Typically a peer is not a candidate for sync if it's not a full node,
 	// however regression test is special in that the regression tool is
 	// not a full node and still needs to be considered a sync candidate.
-	if sm.chainParams == &chaincfg.RegressionNetParams {
-		// The peer is not a candidate if it's not coming from localhost
-		// or the hostname can't be determined for some reason.
-		host, _, err := net.SplitHostPort(peer.Addr())
-		if err != nil {
-			return false
-		}
-
-		if host != "127.0.0.1" && host != "localhost" {
-			return false
-		}
+	if sm.chainNet == wire.TestNet {
+		_, _, err := net.SplitHostPort(peer.Addr())
+		return err == nil
 	} else {
 		// The peer is not a candidate for sync if it's not a full
 		// node.
@@ -892,7 +885,7 @@ func New(config *Config, peers map[*peerpkg.Peer]*peerpkg.SyncState) (*SyncManag
 	sm := SyncManager{
 		log:                     &syncManagerLogger,
 		peerNotifier:            config.PeerNotifier,
-		chainParams:             config.ChainParams,
+		chainNet:                config.ChainParams.Net,
 		peerStates:              peers,
 		msgChan:                 make(chan interface{}, config.MaxPeers*3),
 		quit:                    make(chan struct{}),
