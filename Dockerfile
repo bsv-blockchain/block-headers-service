@@ -1,4 +1,4 @@
-FROM golang:1.24.0 AS build-stage
+FROM golang:1.25.5 AS build-stage
 
 ENV GOPATH=/
 COPY ./ ./
