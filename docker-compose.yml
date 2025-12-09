@@ -39,7 +39,7 @@ services:
       - BHS_DB_PREPARED_DB=true
       - BHS_DB_PREPARED_DB_FILEPATH=./data/blockheaders-testnet.csv.gz
       - BHS_P2P_CHAIN_NET_TYPE=testnet
-      - BHS_HTTP_AUTH_TOKEN=admin_only_afUMlv5iiDgQtj22O9n5fADeSb
+      - BHS_HTTP_AUTH_TOKEN=admin_only_token
     depends_on:
       db:
         condition: service_healthy
