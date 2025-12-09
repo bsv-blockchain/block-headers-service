@@ -9,7 +9,7 @@
 
 <a href="https://github.com/bsv-blockchain/block-headers-service/releases"><img src="https://img.shields.io/github/release-pre/bsv-blockchain/block-headers-service?include_prereleases&style=flat-square&logo=github&color=black" alt="Release"></a>
 <a href="https://golang.org/"><img src="https://img.shields.io/github/go-mod/go-version/bsv-blockchain/block-headers-service?style=flat-square&logo=go&color=00ADD8" alt="Go Version"></a>
-<a href="https://github.com/bsv-blockchain/block-headers-service/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-OpenBSV-blue?style=flat-square" alt="License"></a>
+<a href="https://github.com/bsv-blockchain/block-headers-service/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-OpenBSV-blue?style=flat-square" alt="License"></a>
 
 <br/>
 
@@ -19,7 +19,7 @@
        <code>CI / CD</code> &nbsp;&nbsp;
     </td>
     <td align="left">
-       <a href="https://github.com/bsv-blockchain/block-headers-service/actions"><img src="https://img.shields.io/github/actions/workflow/status/bsv-blockchain/block-headers-service/fortress.yml?branch=master&label=build&logo=github&style=flat-square" alt="Build"></a>
+       <a href="https://github.com/bsv-blockchain/block-headers-service/actions"><img src="https://img.shields.io/github/actions/workflow/status/bsv-blockchain/block-headers-service/fortress.yml?branch=main&label=build&logo=github&style=flat-square" alt="Build"></a>
        <a href="https://github.com/bsv-blockchain/block-headers-service/actions"><img src="https://img.shields.io/github/last-commit/bsv-blockchain/block-headers-service?style=flat-square&logo=git&logoColor=white&label=last%20update" alt="Last Commit"></a>
     </td>
     <td align="right">
@@ -27,7 +27,7 @@
     </td>
     <td align="left">
        <a href="https://goreportcard.com/report/github.com/bsv-blockchain/block-headers-service"><img src="https://goreportcard.com/badge/github.com/bsv-blockchain/block-headers-service?style=flat-square" alt="Go Report"></a>
-       <a href="https://codecov.io/gh/bsv-blockchain/block-headers-service"><img src="https://codecov.io/gh/bsv-blockchain/block-headers-service/branch/master/graph/badge.svg?style=flat-square" alt="Coverage"></a>
+       <a href="https://codecov.io/gh/bsv-blockchain/block-headers-service"><img src="https://codecov.io/gh/bsv-blockchain/block-headers-service/branch/main/graph/badge.svg?style=flat-square" alt="Coverage"></a>
     </td>
   </tr>
 
@@ -444,7 +444,7 @@ The release process is defined in the [.goreleaser.yml](.goreleaser.yml) configu
 Then create and push a new Git tag using:
 
 ```bash
-magex version:bump push=true bump=patch branch=master
+magex version:bump push=true bump=patch branch=main
 ```
 
 This process ensures consistent, repeatable releases with properly versioned artifacts and citation metadata.
