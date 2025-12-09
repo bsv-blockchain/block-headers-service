@@ -85,8 +85,8 @@ const (
 	`
 
 	sqlVerifyIfGenesisPresent = `
-	SELECT hash 
-	FROM headers 
+	SELECT hash
+	FROM headers
 	WHERE height = 0
 	`
 
@@ -174,12 +174,12 @@ const (
 	sqlGetHeadersHeight = `
 	SELECT COALESCE(MAX(height), 0) AS startHeight
 		FROM headers
-		WHERE header_state = 'LONGEST_CHAIN' 
+		WHERE header_state = 'LONGEST_CHAIN'
   			AND hash IN (?)
 	`
 
 	sqlHeaderByHeightRangeLongestChain = `
-	SELECT 
+	SELECT
 		hash, height, version, merkleroot, nonce, bits, chainwork, previous_block, timestamp, header_state, cumulated_work
 	FROM headers
 	WHERE height BETWEEN ? AND ? AND header_state = 'LONGEST_CHAIN';

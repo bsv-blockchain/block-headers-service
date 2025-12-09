@@ -75,15 +75,15 @@ var merkleRootsTestSamples = []merkleRootBatchSample{
 		                        },
 		                        {
 		                          "merkleRoot": "abe45c884b116744a6e73da09fc58c02aa18b99073bd465d4880d16fdcbcfd48",
-		                          "blockHeight": 849839 
+		                          "blockHeight": 849839
 		                        },
 		                        {
 		                          "merkleRoot": "1e06d817ce765e6186e25632506fb03d631890d115d5cd00ca96a91896a1c5ad",
-		                          "blockHeight": 849840 
+		                          "blockHeight": 849840
 		                        },
 		                        {
 		                          "merkleRoot": "5c1d84ed999dd5df94bca96c6a5ed5e1450be6dcd6effa5359f3ebf36795df01",
-		                          "blockHeight": 849841 
+		                          "blockHeight": 849841
 		                        },
 		                        {
 		                          "merkleRoot": "dcbb3d71d870805aa0657452efc8a12410f0281069c3f75974e7d9a2221e5c16",

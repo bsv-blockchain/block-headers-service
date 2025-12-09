@@ -15,7 +15,7 @@ const (
 	`
 
 	//nolint:gosec
-	sqlGetToken = ` 
+	sqlGetToken = `
 	SELECT token, created_at
 	FROM tokens
 	WHERE token = ?

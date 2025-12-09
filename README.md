@@ -46,9 +46,9 @@
       <ul>
         <li><a href="#configuration">Configuration</a></li>
       </ul>
-      
+
     </li>
-    
+
   </ol>
 </details>
 
@@ -85,18 +85,18 @@ http://localhost:8080/swagger/index.html
 
 #### Enabled by Default
 
-The default assumes you want to use Authentication. This requires a single environment variable.  
+The default assumes you want to use Authentication. This requires a single environment variable.
 
-`BHS_HTTP_AUTH_TOKEN=replace_me_with_token_you_want_to_use_as_admin_token`  
+`BHS_HTTP_AUTH_TOKEN=replace_me_with_token_you_want_to_use_as_admin_token`
 
-#### Disabling Auth Requirement  
+#### Disabling Auth Requirement
 
-To disable authentication exposing all endpoints openly, set the following environment variable. 
-This is available if you prefer to use your own authentication in a separate proxy or similar. 
-We do not recommend you expose the server to the internet without authentication, 
-as it would then be possible for anyone to prune your headers at will.  
+To disable authentication exposing all endpoints openly, set the following environment variable.
+This is available if you prefer to use your own authentication in a separate proxy or similar.
+We do not recommend you expose the server to the internet without authentication,
+as it would then be possible for anyone to prune your headers at will.
 
-`BHS_HTTP_USE_AUTH=false`  
+`BHS_HTTP_USE_AUTH=false`
 
 #### Authenticate with admin token
 
@@ -143,7 +143,7 @@ Block headers service can notify a client via websockets that new header was rec
 Block headers service use [centrifugal/centrifuge](https://github.com/centrifugal/centrifuge) to run a server.
 Therefore, to integrate you need to choose a client library matching a programming language of your choice.
 
-Example how to subscribe using GO lang library [centrifugal/centrifuge-go](https://github.com/centrifugal/centrifuge-go) 
+Example how to subscribe using GO lang library [centrifugal/centrifuge-go](https://github.com/centrifugal/centrifuge-go)
 can be found in [./examples/ws-subscribe-to-new-headers/](./examples/ws-subscribe-to-new-headers/main.go)
 
 ### Webhooks
@@ -161,7 +161,7 @@ Creating a new webhook is done via POST request
   "requiredAuth": {
     "type": "BEARER|CUSTOM_HEADER",
     "token": "<authorization_token>",
-    "header": "<custom_header_name>",      
+    "header": "<custom_header_name>",
   }
 }
  ```
@@ -212,7 +212,7 @@ a) Clone the repo
 
    ```sh
   git clone https://github.com/bitcoin-sv/block-headers-service
-   ``` 
+   ```
 1. ```go run ./cmd/main.go```
 
 Or run app with docker

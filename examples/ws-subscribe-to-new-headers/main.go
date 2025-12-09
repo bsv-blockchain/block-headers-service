@@ -28,6 +28,9 @@ func main() {
 		Recoverable: true,
 		Positioned:  true,
 	})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// It's only for example purposes, configure it according to your needs
 	configureAdditionalDebugMessagesOnSubscription(sub)

@@ -16,7 +16,7 @@ const (
 	VALUES(:url, :token_header, :token, :created_at)
 	`
 
-	sqlGetWebhookByURL = ` 
+	sqlGetWebhookByURL = `
 	SELECT url, token_header, token, created_at, last_emit_status, last_emit_timestamp, errors_count, is_active
 	FROM webhooks
 	WHERE url = ?
