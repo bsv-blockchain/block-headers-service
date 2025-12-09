@@ -9,7 +9,6 @@ import (
 )
 
 func TestChainWork(t *testing.T) {
-
 	testCases := []struct {
 		height            int
 		bits              uint32
@@ -19,31 +18,38 @@ func TestChainWork(t *testing.T) {
 			height:            0,
 			bits:              0x1d00ffff,
 			expectedChainWork: "4295032833",
-		}, {
+		},
+		{
 			height:            100_000,
 			bits:              0x1b04864c,
 			expectedChainWork: "62209952899966",
-		}, {
+		},
+		{
 			height:            200_000,
 			bits:              0x1a05db8b,
 			expectedChainWork: "12301577519373468",
-		}, {
+		},
+		{
 			height:            300_000,
 			bits:              0x1900896c,
 			expectedChainWork: "34364008516618225545",
-		}, {
+		},
+		{
 			height:            400_000,
 			bits:              0x1806b99f,
 			expectedChainWork: "702202025755488147582",
-		}, {
+		},
+		{
 			height:            500_000,
 			bits:              0x1809b91a,
 			expectedChainWork: "485687622324422197901",
-		}, {
+		},
+		{
 			height:            600_000,
 			bits:              0x18089116,
 			expectedChainWork: "551244161910380757574",
-		}, {
+		},
+		{
 			height:            700_000,
 			bits:              0x181452d3,
 			expectedChainWork: "232359535664858305416",

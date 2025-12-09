@@ -84,13 +84,13 @@ var (
 
 // STALE CHAIN.
 var (
-	//StaleHashHeight1 is a hash of first block in the StaleChain() fixture result.
+	// StaleHashHeight1 is a hash of first block in the StaleChain() fixture result.
 	StaleHashHeight1 = HashOf("3930673fe039a7bfe4e506900c940b40e956114601ba4f59f7e21db78110e1a3")
-	//StaleHashHeight2 is a hash of Second block in the StaleChain() fixture result.
+	// StaleHashHeight2 is a hash of Second block in the StaleChain() fixture result.
 	StaleHashHeight2 = HashOf("a562fd6a288f046f7a46023ce500667f74f54b893dcc047aa5faa7f4b40ee547")
-	//StaleHashHeight3 is a hash of Third block in the StaleChain() fixture result.
+	// StaleHashHeight3 is a hash of Third block in the StaleChain() fixture result.
 	StaleHashHeight3 = HashOf("8e23f1eda5ad347e83638901c7072ce16f953718685d1f0521f352b8dd4a4ef7")
-	//StaleHashHeight4 is a hash of Fourth block in the StaleChain() fixture result.
+	// StaleHashHeight4 is a hash of Fourth block in the StaleChain() fixture result.
 	StaleHashHeight4 = HashOf("34d61c9b10f013990716cc63a308e16e802e00f560c6e4ab0b7c9eb416c50e01")
 
 	// StaleHeaderSourceHeight1 is example representation of stale chain header source on that height.

@@ -9,9 +9,9 @@ import (
 	"github.com/bitcoin-sv/block-headers-service/notification"
 )
 
-type webhookTargetClientFunc func(headers map[string]string, method string, url string, body any) (*http.Response, error)
+type webhookTargetClientFunc func(headers map[string]string, method, url string, body any) (*http.Response, error)
 
-func (f webhookTargetClientFunc) Call(headers map[string]string, method string, url string, body any) (*http.Response, error) {
+func (f webhookTargetClientFunc) Call(headers map[string]string, method, url string, body any) (*http.Response, error) {
 	return f(headers, method, url, body)
 }
 
@@ -20,14 +20,13 @@ func NewWebhookTargetClient() notification.WebhookTargetClient {
 	return webhookTargetClientFunc(callRequest)
 }
 
-func callRequest(headers map[string]string, method string, url string, body any) (*http.Response, error) {
+func callRequest(headers map[string]string, method, url string, body any) (*http.Response, error) {
 	bBytes, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
 	req, err := http.NewRequestWithContext(context.Background(), method, url, bytes.NewReader(bBytes))
-
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +37,6 @@ func callRequest(headers map[string]string, method string, url string, body any)
 
 	client := &http.Client{}
 	res, err := client.Do(req)
-
 	if err != nil {
 		return nil, err
 	}

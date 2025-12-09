@@ -108,7 +108,7 @@ func dropHeadersFile(tmpHeadersFile *os.File, tmpHeadersFilePath string, log *ze
 	}
 }
 
-func prepareRecord(record []string, previousBlockHash string, cumulatedChainWork string, rowIndex int) (*dto.DbBlockHeader, error) {
+func prepareRecord(record []string, previousBlockHash, cumulatedChainWork string, rowIndex int) (*dto.DbBlockHeader, error) {
 	parsedRow, err := parseRecordToBlockHeadersSource(record, previousBlockHash)
 	if err != nil {
 		return nil, fmt.Errorf("error while parsing values from block on height %d: %w", rowIndex, err)

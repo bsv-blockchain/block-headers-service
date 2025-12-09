@@ -155,7 +155,8 @@ func (msg *MsgCFCheckpt) MaxPayloadLength(_ uint32) uint32 {
 // NewMsgCFCheckpt returns a new bitcoin cfheaders message that conforms to
 // the Message interface. See MsgCFCheckpt for details.
 func NewMsgCFCheckpt(filterType FilterType, stopHash *chainhash.Hash,
-	headersCount int) *MsgCFCheckpt {
+	headersCount int,
+) *MsgCFCheckpt {
 	return &MsgCFCheckpt{
 		FilterType:    filterType,
 		StopHash:      *stopHash,

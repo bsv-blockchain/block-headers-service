@@ -99,10 +99,10 @@ func createWebhook() (req *http.Request, err error) {
 	}
 	req, err = http.NewRequestWithContext(context.Background(), http.MethodPost, "/api/v1/webhook", bytes.NewReader(webhookBytes))
 	req.Header.Add("Content-Type", "application/json")
-	return
+	return req, err
 }
 
 func revokeWebhook(url string) (req *http.Request, err error) {
 	req, err = http.NewRequestWithContext(context.Background(), http.MethodDelete, "/api/v1/webhook?url="+url, nil)
-	return
+	return req, err
 }

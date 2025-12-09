@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	client := centrifuge.NewJsonClient("ws://localhost:8080/connection/websocket", centrifuge.Config{
 		// Uncomment and adjust value if block headers service has authentication turned on
 		Token: "mQZQ6WmxURxWz5ch",
@@ -34,7 +33,7 @@ func main() {
 	configureAdditionalDebugMessagesOnSubscription(sub)
 
 	sub.OnPublication(func(e centrifuge.PublicationEvent) {
-		//TODO: HERE PLACE THE LOGIC TO HANDLE EVENT ABOUT NEW HEADER
+		// TODO: HERE PLACE THE LOGIC TO HANDLE EVENT ABOUT NEW HEADER
 		log.Printf("Event received on channel %s: %s (offset %d)", sub.Channel, e.Data, e.Offset)
 	})
 

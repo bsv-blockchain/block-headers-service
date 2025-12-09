@@ -61,7 +61,6 @@ func (s *WebhooksService) DeleteWebhook(value string) error {
 // Notify notifies all active webhooks.
 func (s *WebhooksService) Notify(event Event) {
 	webhooks, err := s.webhooks.GetAllWebhooks()
-
 	if err != nil {
 		s.log.Error().Msgf("Cannot load webhooks to notify. %v", err)
 		return

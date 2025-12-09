@@ -410,7 +410,6 @@ func TestLocateHeadersGetHeadersErrorPath(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			_, err := tData.hs.Headers.LocateHeadersGetHeaders(tc.locator, tc.hashstop)
 			assert.Equal(t, err.Error(), tc.expectedErrorMessage)
-
 		})
 	}
 }
@@ -444,7 +443,7 @@ func setUpServices() *testData {
 	}
 }
 
-func createHeader(height int32, hash chainhash.Hash, prevBlock chainhash.Hash) domains.BlockHeader {
+func createHeader(height int32, hash, prevBlock chainhash.Hash) domains.BlockHeader {
 	return domains.BlockHeader{
 		Height:        height,
 		Hash:          hash,

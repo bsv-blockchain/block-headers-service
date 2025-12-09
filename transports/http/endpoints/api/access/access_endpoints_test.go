@@ -151,7 +151,7 @@ func getTokenInfo(headerToken string) (req *http.Request, err error) {
 	if headerToken != "" && err == nil {
 		req.Header.Add("Authorization", "Bearer "+headerToken)
 	}
-	return
+	return req, err
 }
 
 func createToken(headerToken string) (req *http.Request, err error) {
@@ -159,13 +159,13 @@ func createToken(headerToken string) (req *http.Request, err error) {
 	if headerToken != "" && err == nil {
 		req.Header.Add("Authorization", "Bearer "+headerToken)
 	}
-	return
+	return req, err
 }
 
-func deleteToken(headerToken string, tokenToDelete string) (req *http.Request, err error) {
+func deleteToken(headerToken, tokenToDelete string) (req *http.Request, err error) {
 	req, err = http.NewRequestWithContext(context.Background(), http.MethodDelete, "/api/v1/access/"+tokenToDelete, nil)
 	if headerToken != "" && err == nil {
 		req.Header.Add("Authorization", "Bearer "+headerToken)
 	}
-	return
+	return req, err
 }

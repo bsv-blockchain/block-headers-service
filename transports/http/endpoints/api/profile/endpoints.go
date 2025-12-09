@@ -26,5 +26,4 @@ func NewHandler(_ *service.Services) router.RootEndpoints {
 			profile.GET("threadcreate", gin.WrapF(pprof.Handler("threadcreate").ServeHTTP))
 		}
 	})
-
 }

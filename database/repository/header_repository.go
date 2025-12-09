@@ -57,7 +57,7 @@ func (r *HeaderRepository) GetHeaderByHeight(height int32) (*domains.BlockHeader
 }
 
 // GetHeaderByHeightRange returns headers from db in specified height range.
-func (r *HeaderRepository) GetHeaderByHeightRange(from int, to int) ([]*domains.BlockHeader, error) {
+func (r *HeaderRepository) GetHeaderByHeightRange(from, to int) ([]*domains.BlockHeader, error) {
 	dbHeaders, err := r.db.GetHeaderByHeightRange(from, to)
 	if err == nil {
 		return dto.ConvertToBlockHeader(dbHeaders), nil
@@ -162,7 +162,7 @@ func (r *HeaderRepository) GetMerkleRoots(batchSize int, lastEvaluatedKey string
 	lastEvaluatedKeyFromDb := merklerootsFromDb[len(merklerootsFromDb)-1].MerkleRoot
 
 	if tip.MerkleRoot.String() != lastEvaluatedKeyFromDb {
-		merkleroots.Page.LastEvaluatedKey = lastEvaluatedKeyFromDb //indicating we still have some data available from db
+		merkleroots.Page.LastEvaluatedKey = lastEvaluatedKeyFromDb // indicating we still have some data available from db
 	}
 
 	for i, merkleroot := range merklerootsFromDb {
@@ -202,7 +202,7 @@ func (r *HeaderRepository) GetAllTips() ([]*domains.BlockHeader, error) {
 }
 
 // GetChainBetweenTwoHashes calculates and returnes chain between 2 hashes.
-func (r *HeaderRepository) GetChainBetweenTwoHashes(low string, high string) ([]*domains.BlockHeader, error) {
+func (r *HeaderRepository) GetChainBetweenTwoHashes(low, high string) ([]*domains.BlockHeader, error) {
 	dbHeaders, err := r.db.GetChainBetweenTwoHashes(low, high)
 	if err == nil {
 		return dto.ConvertToBlockHeader(dbHeaders), nil
@@ -220,7 +220,7 @@ func (r *HeaderRepository) GetHeadersStartHeight(hashtable []string) (int, error
 }
 
 // GetHeadersByHeightRange returns headers from db in specified height range.
-func (r *HeaderRepository) GetHeadersByHeightRange(from int, to int) ([]*domains.BlockHeader, error) {
+func (r *HeaderRepository) GetHeadersByHeightRange(from, to int) ([]*domains.BlockHeader, error) {
 	bh, err := r.db.GetHeadersByHeightRange(from, to)
 	if err != nil {
 		return nil, err

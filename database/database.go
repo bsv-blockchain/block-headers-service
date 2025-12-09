@@ -6,6 +6,7 @@ import (
 
 	"github.com/bitcoin-sv/block-headers-service/config"
 	"github.com/jmoiron/sqlx"
+
 	// use blank import to register PostgreSQL driver.
 	_ "github.com/lib/pq"
 	// use blank import to register sqlite driver.

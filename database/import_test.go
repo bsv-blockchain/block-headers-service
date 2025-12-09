@@ -24,8 +24,10 @@ type testCaseData struct {
 	numberOfBlocks     int
 }
 
-var timeLayout = "2006-01-02 15:04:05-07:00"
-var localTimezone, _ = time.LoadLocation("Local")
+var (
+	timeLayout       = "2006-01-02 15:04:05-07:00"
+	localTimezone, _ = time.LoadLocation("Local")
+)
 
 func TestPrepareRecordHappyPath(t *testing.T) {
 	testCases := []testCase{
@@ -124,7 +126,7 @@ func TestPrepareRecordHappyPath(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var result = []dto.DbBlockHeader{}
+			result := []dto.DbBlockHeader{}
 			var err error
 			for i := 0; i < tc.data.numberOfBlocks; i++ {
 				block, err := prepareRecord(tc.data.blockRecord[i], tc.data.previousBlockHash, tc.data.cumulatedChainWork, tc.data.rowIndex)
@@ -143,7 +145,6 @@ func TestPrepareRecordHappyPath(t *testing.T) {
 }
 
 func TestPrepareRecordErrorPath(t *testing.T) {
-
 	testCases := []testCase{
 		{
 			testID: 1,

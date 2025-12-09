@@ -49,5 +49,5 @@ func mapAndLog(err error, log *zerolog.Logger) (model ResponseError, statusCode 
 		}
 		logInstance.Err(err).Msgf("Error HTTP response, returning %d", statusCode)
 	}
-	return
+	return model, statusCode
 }

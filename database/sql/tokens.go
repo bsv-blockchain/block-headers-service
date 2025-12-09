@@ -73,7 +73,6 @@ func (h *HeadersDb) DeleteToken(ctx context.Context, token string) error {
 
 	if err = tx.Commit(); err != nil {
 		return bhserrors.ErrDeleteToken.Wrap(err)
-
 	}
 
 	return nil

@@ -68,7 +68,8 @@ func (msg *MsgGetCFHeaders) MaxPayloadLength(_ uint32) uint32 {
 // the Message interface using the passed parameters and defaults for the
 // remaining fields.
 func NewMsgGetCFHeaders(filterType FilterType, startHeight uint32,
-	stopHash *chainhash.Hash) *MsgGetCFHeaders {
+	stopHash *chainhash.Hash,
+) *MsgGetCFHeaders {
 	return &MsgGetCFHeaders{
 		FilterType:  filterType,
 		StartHeight: startHeight,

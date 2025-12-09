@@ -113,7 +113,7 @@ func (hs *HeaderService) GetHeaderByHash(hash string) (*domains.BlockHeader, err
 }
 
 // GetHeadersByHeight returns the specified number of headers starting from given height.
-func (hs *HeaderService) GetHeadersByHeight(height int, count int) ([]*domains.BlockHeader, error) {
+func (hs *HeaderService) GetHeadersByHeight(height, count int) ([]*domains.BlockHeader, error) {
 	headersRange := height + count - 1
 	headers, err := hs.repo.Headers.GetHeaderByHeightRange(height, headersRange)
 
@@ -124,7 +124,7 @@ func (hs *HeaderService) GetHeadersByHeight(height int, count int) ([]*domains.B
 }
 
 // GetHeaderAncestorsByHash returns first ancestor for two headers specified by hash.
-func (hs *HeaderService) GetHeaderAncestorsByHash(hash string, ancestorHash string) ([]*domains.BlockHeader, error) {
+func (hs *HeaderService) GetHeaderAncestorsByHash(hash, ancestorHash string) ([]*domains.BlockHeader, error) {
 	// Get headers by hash
 	reqHeader, err := hs.repo.Headers.GetHeaderByHash(hash)
 	ancestorHeader, err2 := hs.repo.Headers.GetHeaderByHash(ancestorHash)

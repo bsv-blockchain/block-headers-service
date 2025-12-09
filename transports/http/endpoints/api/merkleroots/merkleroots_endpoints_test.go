@@ -357,7 +357,6 @@ func TestMerkleRootsSuccess(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-
 			// setup
 			bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithAPIAuthorizationDisabled(), testapp.WithLongestChain())
 			defer cleanup()
@@ -410,7 +409,6 @@ func TestMerkleRootsFailure(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-
 			// setup
 			bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChainFork(), testapp.WithAPIAuthorizationDisabled())
 			defer cleanup()

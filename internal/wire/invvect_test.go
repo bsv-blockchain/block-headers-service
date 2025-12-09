@@ -34,7 +34,6 @@ func TestInvTypeStringer(t *testing.T) {
 			continue
 		}
 	}
-
 }
 
 // TestInvVect tests the InvVect API.
@@ -52,7 +51,6 @@ func TestInvVect(t *testing.T) {
 		t.Errorf("NewInvVect: wrong hash - got %v, want %v",
 			spew.Sdump(iv.Hash), spew.Sdump(hash))
 	}
-
 }
 
 // TestInvVectWire tests the InvVect wire encode and decode for various

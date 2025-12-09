@@ -26,14 +26,14 @@ definitions:
     type: object
   domains.MerkleRootConfirmationState:
     enum:
-    - CONFIRMED
-    - UNABLE_TO_VERIFY
-    - INVALID
+      - CONFIRMED
+      - UNABLE_TO_VERIFY
+      - INVALID
     type: string
     x-enum-varnames:
-    - Confirmed
-    - UnableToVerify
-    - Invalid
+      - Confirmed
+      - UnableToVerify
+      - Invalid
   domains.MerkleRootsESKPagedResponse:
     properties:
       content:
@@ -43,7 +43,7 @@ definitions:
         type: array
       page:
         allOf:
-        - $ref: '#/definitions/domains.ExclusiveStartKeyPageInfo'
+          - $ref: '#/definitions/domains.ExclusiveStartKeyPageInfo'
         description: Pagination details
     type: object
   domains.MerkleRootsResponse:
@@ -179,105 +179,105 @@ paths:
   /../../status:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
       summary: Check the status of the server
       tags:
-      - status
+        - status
   /access:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/domains.Token'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Get information about token
       tags:
-      - access
+        - access
     post:
       consumes:
-      - '*/*'
+        - '*/*'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/domains.Token'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Creates new token
       tags:
-      - access
+        - access
   /access/{token}:
     delete:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: Token to delete
-        in: path
-        name: token
-        required: true
-        type: string
+        - description: Token to delete
+          in: path
+          name: token
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets header state
       tags:
-      - access
+        - access
   /chain/header/{hash}:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: Requested Header Hash
-        in: path
-        name: hash
-        required: true
-        type: string
+        - description: Requested Header Hash
+          in: path
+          name: hash
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/transports_http_endpoints_api_headers.BlockHeaderResponse'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets header by hash
       tags:
-      - headers
+        - headers
   /chain/header/{hash}/{ancestorHash}/ancestor:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: Requested Header Hash
-        in: path
-        name: hash
-        required: true
-        type: string
-      - description: Ancestor Header Hash
-        in: path
-        name: ancestorHash
-        required: true
-        type: string
+        - description: Requested Header Hash
+          in: path
+          name: hash
+          required: true
+          type: string
+        - description: Ancestor Header Hash
+          in: path
+          name: ancestorHash
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -286,26 +286,26 @@ paths:
               $ref: '#/definitions/transports_http_endpoints_api_headers.BlockHeaderResponse'
             type: array
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets header ancestors
       tags:
-      - headers
+        - headers
   /chain/header/byHeight:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: Height to start from
-        in: query
-        name: height
-        required: true
-        type: integer
-      - description: Headers count (optional)
-        in: query
-        name: count
-        type: integer
+        - description: Height to start from
+          in: query
+          name: height
+          required: true
+          type: integer
+        - description: Headers count (optional)
+          in: query
+          name: count
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -314,97 +314,97 @@ paths:
               $ref: '#/definitions/transports_http_endpoints_api_headers.BlockHeaderResponse'
             type: array
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets header by height
       tags:
-      - headers
+        - headers
   /chain/header/commonAncestor:
     post:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: JSON
-        in: body
-        name: ancesstors
-        required: true
-        schema:
-          items:
-            type: string
-          type: array
+        - description: JSON
+          in: body
+          name: ancesstors
+          required: true
+          schema:
+            items:
+              type: string
+            type: array
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/transports_http_endpoints_api_headers.BlockHeaderResponse'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets common ancestors
       tags:
-      - headers
+        - headers
   /chain/header/state/{hash}:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: Requested Header Hash
-        in: path
-        name: hash
-        required: true
-        type: string
+        - description: Requested Header Hash
+          in: path
+          name: hash
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/transports_http_endpoints_api_headers.BlockHeaderStateResponse'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets header state
       tags:
-      - headers
+        - headers
   /chain/merkleroot:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: Batch size of returned merkleroots
-        in: query
-        name: batchSize
-        type: string
-      - description: Last evaluated merkleroot that client has processed
-        in: query
-        name: lastEvaluatedKey
-        type: string
+        - description: Batch size of returned merkleroots
+          in: query
+          name: batchSize
+          type: string
+        - description: Last evaluated merkleroot that client has processed
+          in: query
+          name: lastEvaluatedKey
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/domains.MerkleRootsESKPagedResponse'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Returns merkleroots for the specified range
       tags:
-      - merkleroots
+        - merkleroots
   /chain/merkleroot/verify:
     post:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: JSON
-        in: body
-        name: request
-        required: true
-        schema:
-          items:
-            $ref: '#/definitions/domains.MerkleRootConfirmationRequestItem'
-          type: array
+        - description: JSON
+          in: body
+          name: request
+          required: true
+          schema:
+            items:
+              $ref: '#/definitions/domains.MerkleRootConfirmationRequestItem'
+            type: array
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -413,16 +413,16 @@ paths:
               $ref: '#/definitions/transports_http_endpoints_api_merkleroots.ConfirmationsResponse'
             type: array
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Verifies Merkle roots inclusion in the longest chain
       tags:
-      - merkleroots
+        - merkleroots
   /chain/tip:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -433,119 +433,119 @@ paths:
               type: array
             type: array
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets all tips
       tags:
-      - tip
+        - tip
   /chain/tip/longest:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/transports_http_endpoints_api_tips.TipStateResponse'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets tip of longest chain
       tags:
-      - tip
+        - tip
   /network/peer:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets all peers
       tags:
-      - network
+        - network
   /network/peer/count:
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             type: integer
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Gets peers count
       tags:
-      - network
+        - network
   /webhook:
     delete:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: URL of webhook to revoke
-        in: query
-        name: url
-        required: true
-        type: string
+        - description: URL of webhook to revoke
+          in: query
+          name: url
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Revoke webhook
       tags:
-      - webhooks
+        - webhooks
     get:
       consumes:
-      - '*/*'
+        - '*/*'
       parameters:
-      - description: URL of webhook to check
-        in: query
-        name: url
-        required: true
-        type: string
+        - description: URL of webhook to check
+          in: query
+          name: url
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/notification.Webhook'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Get webhook
       tags:
-      - webhooks
+        - webhooks
     post:
       consumes:
-      - application/json
+        - application/json
       parameters:
-      - description: Webhook to register
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/transports_http_endpoints_api_webhook.Request'
+        - description: Webhook to register
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/transports_http_endpoints_api_webhook.Request'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/notification.Webhook'
       security:
-      - Bearer: []
+        - Bearer: []
       summary: Register new webhook
       tags:
-      - webhooks
+        - webhooks
 securityDefinitions:
   Bearer:
     in: header

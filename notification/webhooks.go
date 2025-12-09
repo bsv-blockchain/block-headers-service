@@ -22,7 +22,7 @@ type Webhook struct {
 
 // WebhookTargetClient is the interface for the webhooks http calls.
 type WebhookTargetClient interface {
-	Call(headers map[string]string, method string, url string, body any) (*http.Response, error)
+	Call(headers map[string]string, method, url string, body any) (*http.Response, error)
 }
 
 // Notify sends notification to webhook.
@@ -34,7 +34,6 @@ func (w *Webhook) Notify(event Event, client WebhookTargetClient) error {
 	}
 
 	res, err := client.Call(headers, http.MethodPost, w.URL, event)
-
 	if err != nil {
 		// Update the webhook after failed notification.
 		w.updateWebhookAfterNotification(0, "", err)

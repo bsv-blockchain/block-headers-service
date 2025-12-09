@@ -35,7 +35,7 @@ func (w *Websocket) Publisher() *WebsocketPublisher {
 }
 
 // Publish sends data to websocket channel.
-func (p *WebsocketPublisher) Publish(channel string, data string) {
+func (p *WebsocketPublisher) Publish(channel, data string) {
 	p.log.Debug().Msgf("Trying to publish to channel %s data: %s", channel, data)
 	_, err := p.publisher.Publish(channel, []byte(data))
 	if err != nil {

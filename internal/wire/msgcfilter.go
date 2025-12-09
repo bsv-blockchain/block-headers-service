@@ -110,7 +110,8 @@ func (msg *MsgCFilter) MaxPayloadLength(_ uint32) uint32 {
 // NewMsgCFilter returns a new bitcoin cfilter message that conforms to the
 // Message interface. See MsgCFilter for details.
 func NewMsgCFilter(filterType FilterType, blockHash *chainhash.Hash,
-	data []byte) *MsgCFilter {
+	data []byte,
+) *MsgCFilter {
 	return &MsgCFilter{
 		FilterType: filterType,
 		BlockHash:  *blockHash,

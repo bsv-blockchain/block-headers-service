@@ -53,7 +53,6 @@ func (h *handler) RegisterAPIEndpoints(router *gin.RouterGroup, _ *config.HTTPCo
 func (h *handler) registerWebhook(c *gin.Context) {
 	var reqBody Request
 	err := c.Bind(&reqBody)
-
 	if err != nil {
 		bhserrors.ErrorResponse(c, bhserrors.ErrBindBody.Wrap(err), h.log)
 	}

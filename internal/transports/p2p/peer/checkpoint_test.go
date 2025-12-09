@@ -52,7 +52,6 @@ func TestCheckpointCreationLastReached(t *testing.T) {
 			assert.Equal(t, params.expectedLastReached, chckPoint.LastReached())
 		})
 	}
-
 }
 
 func TestCheckpointCurrentCheckpoint(t *testing.T) {
@@ -114,7 +113,6 @@ func TestCheckpointCurrentCheckpoint(t *testing.T) {
 			}
 		})
 	}
-
 }
 
 func TestCheckpointVerificationSuccess(t *testing.T) {

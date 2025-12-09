@@ -29,8 +29,8 @@ type Headers interface {
 	GetTipHeight() int32
 	CountHeaders() int
 	GetHeaderByHash(hash string) (*domains.BlockHeader, error)
-	GetHeadersByHeight(height int, count int) ([]*domains.BlockHeader, error)
-	GetHeaderAncestorsByHash(hash string, ancestorHash string) ([]*domains.BlockHeader, error)
+	GetHeadersByHeight(height, count int) ([]*domains.BlockHeader, error)
+	GetHeaderAncestorsByHash(hash, ancestorHash string) ([]*domains.BlockHeader, error)
 	GetCommonAncestor(hashes []string) (*domains.BlockHeader, error)
 	GetHeadersState(hash string) (*domains.BlockHeaderState, error)
 	GetTips() ([]*domains.BlockHeader, error)

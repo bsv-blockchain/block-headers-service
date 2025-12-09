@@ -29,8 +29,10 @@ import (
 	"github.com/testcontainers/testcontainers-go/wait"
 )
 
-const localHTTPServerURL = "http://localhost:8080"
-const whatsonchainAPIURL = "https://api.whatsonchain.com/v1/bsv/main/chain/tips"
+const (
+	localHTTPServerURL = "http://localhost:8080"
+	whatsonchainAPIURL = "https://api.whatsonchain.com/v1/bsv/main/chain/tips"
+)
 
 type WhatsOnChainForkTip struct {
 	Height    int    `json:"height"`
@@ -399,7 +401,6 @@ func fetchMerkleRootsBatch(ctx context.Context, merkleRootsTestSamples merkleRoo
 	resp, err := client.Do(req)
 	if err != nil {
 		t.Fatalf("Failed to make HTTP request to aplication: %v", err)
-
 	}
 	defer func() {
 		if closeErr := resp.Body.Close(); closeErr != nil {

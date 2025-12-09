@@ -279,8 +279,8 @@ func WriteMessage(w io.Writer, msg Message, pver uint32, bsvnet BitcoinNet) erro
 // to specify the message encoding format to be used when serializing wire
 // messages.
 func WriteMessageWithEncodingN(w io.Writer, msg Message, pver uint32,
-	bsvnet BitcoinNet, encoding MessageEncoding) (int, error) {
-
+	bsvnet BitcoinNet, encoding MessageEncoding,
+) (int, error) {
 	totalBytes := 0
 
 	// Enforce max command size.
@@ -331,7 +331,6 @@ func WriteMessageWithEncodingN(w io.Writer, msg Message, pver uint32,
 	// return the number of bytes written.
 	hw := bytes.NewBuffer(make([]byte, 0, MessageHeaderSize))
 	err = writeElements(hw, hdr.magic, command, hdr.length, hdr.checksum)
-
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -356,8 +355,8 @@ func WriteMessageWithEncodingN(w io.Writer, msg Message, pver uint32,
 // allows the caller to specify which message encoding is to to consult when
 // decoding wire messages.
 func ReadMessageWithEncodingN(r io.Reader, pver uint32, bsvnet BitcoinNet,
-	enc MessageEncoding) (int, Message, []byte, error) {
-
+	enc MessageEncoding,
+) (int, Message, []byte, error) {
 	totalBytes := 0
 	n, hdr, err := readMessageHeader(r)
 	totalBytes += n

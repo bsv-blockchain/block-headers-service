@@ -153,7 +153,6 @@ func locatorSummary(locator []*chainhash.Hash, stopHash *chainhash.Hash) string 
 	}
 
 	return fmt.Sprintf("no locator, stop %s", stopHash)
-
 }
 
 // sanitizeString strips any characters which are even remotely dangerous, such
