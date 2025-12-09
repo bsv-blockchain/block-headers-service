@@ -21,7 +21,7 @@
                 "sections": [
                     "standard",
                     "default",
-                    "prefix(github.com/bsv-blockchain/go-template)"
+                    "prefix(github.com/bsv-blockchain/block-headers-service)"
                 ]
             },
             "gofmt": {
@@ -32,7 +32,7 @@
             },
             "goimports": {
                 "local-prefixes": [
-                    "github.com/bsv-blockchain/go-template"
+                    "github.com/bsv-blockchain/block-headers-service"
                 ]
             }
         }

@@ -37,7 +37,7 @@ builds:
 # Archives
 # ---------------------------
 archives:
-  - id: go-template
+  - id: block-headers-service
     name_template: >-
       {{- .ProjectName }}_{{- .Version }}_{{- .Os }}_{{- .Arch }}
     files:

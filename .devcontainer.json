@@ -28,7 +28,7 @@
         "type=cache,target=/home/vscode/.cache/go-build",
         "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock"
     ],
-    "name": "go-template dev container",
+    "name": "block-headers-service dev container",
     "postCreateCommand": "magex lint && magex vet && magex test",
     "postStartCommand": "go install github.com/mrz1836/mage-x/cmd/magex@latest",
     "remoteUser": "vscode",

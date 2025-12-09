@@ -1,6 +1,6 @@
 # 🛟 Support Guide
 
-Need help with **go-template**? You're in the right place. Here’s how to get support, report issues, and stay aligned with project guidelines.
+Need help with **block-headers-service**? You're in the right place. Here’s how to get support, report issues, and stay aligned with project guidelines.
 
 <br/>
 
@@ -8,8 +8,8 @@ Need help with **go-template**? You're in the right place. Here’s how to get s
 
 Before asking, check the existing threads:
 
-* 🔍 Search [Issues](https://github.com/bsv-blockchain/go-template/issues) or [Pull Requests](https://github.com/bsv-blockchain/go-template/pulls?q=is%3Apr+is%3Aopen+is%3Aclosed)
-* 🆕 Can’t find what you need? Start a [new issue](https://github.com/bsv-blockchain/go-template/issues/new?template=question.yml).
+* 🔍 Search [Issues](https://github.com/bsv-blockchain/block-headers-service/issues) or [Pull Requests](https://github.com/bsv-blockchain/block-headers-service/pulls?q=is%3Apr+is%3Aopen+is%3Aclosed)
+* 🆕 Can’t find what you need? Start a [new issue](https://github.com/bsv-blockchain/block-headers-service/issues/new?template=question.yml).
 
 <br/>
 
@@ -17,7 +17,7 @@ Before asking, check the existing threads:
 
 Found a bug?
 
-1. Check the [issue tracker](https://github.com/bsv-blockchain/go-template/issues) to avoid duplicates.
+1. Check the [issue tracker](https://github.com/bsv-blockchain/block-headers-service/issues) to avoid duplicates.
 2. If it’s new, open an issue with:
 
 	* Clear steps to reproduce

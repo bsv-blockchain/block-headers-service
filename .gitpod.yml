@@ -1,4 +1,4 @@
-# Gitpod workspace configuration for go-template
+# Gitpod workspace configuration for block-headers-service
 # Uses magex for build automation and development tasks
 # This creates a one-click development environment for contributors
 
@@ -7,7 +7,7 @@ image: gitpod/workspace-go:latest
 tasks:
   - name: setup-and-test
     init: |
-      echo "🚀 Setting up go-template development environment..."
+      echo "🚀 Setting up block-headers-service development environment..."
       echo "📦 Installing MAGE-X build tool..."
       go install github.com/mrz1836/mage-x/cmd/magex@latest
 
@@ -22,7 +22,7 @@ tasks:
 
     command: |
       echo "==============================================="
-      echo "🎯 Welcome to go-template development!"
+      echo "🎯 Welcome to block-headers-service development!"
       echo "==============================================="
       echo ""
       echo "🛠️  Available magex commands:"
