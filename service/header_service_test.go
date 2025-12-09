@@ -4,15 +4,16 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/fixtures"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testrepository"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
-	"github.com/bitcoin-sv/block-headers-service/repository"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/fixtures"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testrepository"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/repository"
 )
 
 type testData struct {

@@ -3,8 +3,9 @@ package p2putil
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
 )
 
 func TestInitListeners(t *testing.T) {

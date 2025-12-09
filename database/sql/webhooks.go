@@ -4,10 +4,11 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/repository/dto"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/repository/dto"
 )
 
 const (

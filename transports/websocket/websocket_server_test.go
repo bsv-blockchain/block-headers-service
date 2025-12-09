@@ -4,10 +4,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testapp"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/wait"
 	"github.com/centrifugal/centrifuge-go"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testapp"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/wait"
 )
 
 func TestWebsocketCommunicationWithoutAuthentication(t *testing.T) {

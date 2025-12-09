@@ -3,7 +3,7 @@ package config
 import (
 	"strconv"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
 )
 
 // NetworkType is a string that represents the network type.

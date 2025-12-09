@@ -6,14 +6,15 @@ import (
 	"math"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
-	"github.com/bitcoin-sv/block-headers-service/repository"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/repository"
 )
 
 // HeaderService represents Header service and provide access to repositories.

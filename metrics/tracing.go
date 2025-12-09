@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
@@ -14,6 +13,8 @@ import (
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 	"go.opentelemetry.io/otel/trace"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
 )
 
 var tracer trace.Tracer

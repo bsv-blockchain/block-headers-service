@@ -9,9 +9,10 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testapp"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/webhook"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testapp"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/webhook"
 )
 
 var webhookURL = "http://localhost:8080/api/v1/webhook/notify"

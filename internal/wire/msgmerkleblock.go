@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // maxFlagsPerMerkleBlock returns the maximum number of flag bytes that could

@@ -1,8 +1,8 @@
 package fixtures
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
 )
 
 // Default settings for tests.

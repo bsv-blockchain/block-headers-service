@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testapp"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testapp"
 )
 
 func TestReturnSuccessFromStatus(t *testing.T) {

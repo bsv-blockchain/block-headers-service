@@ -7,10 +7,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/wait"
-	"github.com/bitcoin-sv/block-headers-service/transports/websocket"
 	"github.com/centrifugal/centrifuge-go"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/wait"
+	"github.com/bsv-blockchain/block-headers-service/transports/websocket"
 )
 
 // Websocket exposes functions to easy testing of block headers service websocket communication.

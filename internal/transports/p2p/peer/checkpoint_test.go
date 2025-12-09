@@ -3,12 +3,13 @@ package peer
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/fixtures"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/fixtures"
 )
 
 func TestCheckpointCreationLastReached(t *testing.T) {

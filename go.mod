@@ -1,4 +1,4 @@
-module github.com/bitcoin-sv/block-headers-service
+module github.com/bsv-blockchain/block-headers-service
 
 go 1.24.0
 

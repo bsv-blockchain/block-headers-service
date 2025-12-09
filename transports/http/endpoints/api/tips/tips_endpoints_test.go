@@ -7,12 +7,13 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/fixtures"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testapp"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/tips"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/fixtures"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testapp"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/tips"
 )
 
 var expectedTip = tips.TipStateResponse{

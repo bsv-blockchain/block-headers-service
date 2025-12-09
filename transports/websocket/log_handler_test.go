@@ -3,10 +3,11 @@ package websocket
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/logging"
 	"github.com/centrifugal/centrifuge"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/logging"
 )
 
 func TestReturningExpectedLoggingLevel(t *testing.T) {

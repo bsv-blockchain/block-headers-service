@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/transports/p2p/addrmgr"
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/transports/p2p/addrmgr"
 )
 
 type (

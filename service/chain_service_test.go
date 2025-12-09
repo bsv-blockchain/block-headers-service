@@ -4,14 +4,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/fixtures"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testrepository"
-	"github.com/bitcoin-sv/block-headers-service/repository"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/fixtures"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testrepository"
+	"github.com/bsv-blockchain/block-headers-service/repository"
 )
 
 func TestRejectBlockHeader(t *testing.T) {

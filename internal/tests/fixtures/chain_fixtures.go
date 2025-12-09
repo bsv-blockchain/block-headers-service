@@ -3,9 +3,9 @@ package fixtures
 import (
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // StartingChain creates mocked chain entries containing only Genesis Block.

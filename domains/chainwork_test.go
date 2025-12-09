@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
 )
 
 func TestChainWork(t *testing.T) {

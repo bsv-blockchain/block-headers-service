@@ -1,7 +1,7 @@
 package headers
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/domains"
 )
 
 // BlockHeaderResponse defines a single block header.

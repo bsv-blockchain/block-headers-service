@@ -13,8 +13,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
 	"github.com/davecgh/go-spew/spew"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // makeHeader is a convenience function to make a message header in the form of

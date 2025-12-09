@@ -11,9 +11,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
 )
 
 const (

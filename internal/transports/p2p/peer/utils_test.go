@@ -3,8 +3,8 @@ package peer
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
 )
 
 func TestSearchForFinalBlock(t *testing.T) {

@@ -1,9 +1,10 @@
 package auth
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/domains"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/domains"
 )
 
 // RequireAdmin adds wrapper to endpoint handler

@@ -3,8 +3,8 @@ package sql
 import (
 	"context"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/repository/dto"
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/repository/dto"
 )
 
 const (

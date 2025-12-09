@@ -9,8 +9,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
 	"github.com/davecgh/go-spew/spew"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // TestInvVectStringer tests the stringized output for inventory vector types.

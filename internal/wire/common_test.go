@@ -12,8 +12,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
 	"github.com/davecgh/go-spew/spew"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // mainNetGenesisHash is the hash of the first block in the block chain for the

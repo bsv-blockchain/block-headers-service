@@ -3,7 +3,7 @@ package dto
 import (
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/domains"
 )
 
 // DbToken represent authorization token saved in db.

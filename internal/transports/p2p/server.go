@@ -4,11 +4,12 @@ import (
 	"errors"
 	"net"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/transports/p2p/peer"
-	"github.com/bitcoin-sv/block-headers-service/service"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/transports/p2p/peer"
+	"github.com/bsv-blockchain/block-headers-service/service"
 )
 
 type server struct {

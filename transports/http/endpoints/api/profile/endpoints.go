@@ -3,9 +3,10 @@ package profile
 import (
 	"net/http/pprof"
 
-	"github.com/bitcoin-sv/block-headers-service/service"
-	router "github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/routes"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/block-headers-service/service"
+	router "github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/routes"
 )
 
 // NewHandler registers routes that are part of pprof.

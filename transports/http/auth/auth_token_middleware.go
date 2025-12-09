@@ -3,11 +3,12 @@ package auth
 import (
 	"strings"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/service"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/service"
 )
 
 const (

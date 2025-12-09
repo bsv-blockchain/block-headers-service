@@ -5,10 +5,10 @@ import (
 	"slices"
 	"sort"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/fixtures"
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/fixtures"
 )
 
 // HeaderTestRepository in memory HeadersRepository representation for unit testing.

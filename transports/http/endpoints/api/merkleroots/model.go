@@ -1,7 +1,7 @@
 package merkleroots
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/domains"
 )
 
 // MerkleRootConfirmation is a confirmation

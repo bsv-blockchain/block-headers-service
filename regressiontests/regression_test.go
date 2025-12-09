@@ -18,15 +18,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/headers"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/merkleroots"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/tips"
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/headers"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/merkleroots"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/tips"
 )
 
 const (
@@ -47,8 +48,20 @@ func init() {
 	flag.StringVar(&dbEngine, "dbEngine", "postgres", "The database engine to use in tests (postgres or sqlite)")
 }
 
+// dockerAvailable checks if Docker daemon is accessible.
+func dockerAvailable() bool {
+	cmd := exec.Command("docker", "info")
+	return cmd.Run() == nil
+}
+
 func TestApplicationIntegration(t *testing.T) {
 	flag.Parse()
+
+	// Skip if Docker is required but not available
+	if dbEngine == "postgres" && !dockerAvailable() {
+		t.Skip("Skipping: Docker is required for postgres tests but is not available")
+	}
+
 	ctx := context.Background()
 
 	setupApplicationBuild(t)

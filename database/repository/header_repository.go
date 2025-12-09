@@ -3,10 +3,10 @@ package repository
 import (
 	"context"
 
-	"github.com/bitcoin-sv/block-headers-service/database/sql"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	dto "github.com/bitcoin-sv/block-headers-service/repository/dto"
+	"github.com/bsv-blockchain/block-headers-service/database/sql"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	dto "github.com/bsv-blockchain/block-headers-service/repository/dto"
 )
 
 // HeaderRepository provide access to repositories and implements methods for headers.

@@ -1,8 +1,8 @@
 package testapp
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testrepository"
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testrepository"
 )
 
 // WithAPIAuthorizationDisabled allows to not use authorization in Block Headers Service.
