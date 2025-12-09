@@ -19,14 +19,15 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
-	"github.com/bitcoin-sv/block-headers-service/logging"
 	"github.com/btcsuite/go-socks/socks"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/logging"
 )
 
 const (
@@ -1742,8 +1743,8 @@ func (p *Peer) QueueMessage(msg wire.Message, doneChan chan<- struct{}) {
 //
 // This function is safe for concurrent access.
 func (p *Peer) QueueMessageWithEncoding(msg wire.Message, doneChan chan<- struct{},
-	encoding wire.MessageEncoding) {
-
+	encoding wire.MessageEncoding,
+) {
 	// Avoid risk of deadlock if goroutine already exited.  The goroutine
 	// we will be sending to hangs around until it knows for a fact that
 	// it is marked as disconnected and *then* it drains the channels.
@@ -2037,7 +2038,7 @@ func (p *Peer) requireVerAckReceived(remoteMsg wire.Message) (*wire.MsgVerAck, e
 // writeVerAckMsg sends a verack message to the remote peer.
 func (p *Peer) writeVerAckMsg() (err error) {
 	err = p.writeMessage(wire.NewMsgVerAck(), wire.LatestEncoding)
-	return
+	return err
 }
 
 // negotiateInboundProtocol waits to receive a version message from the peer
@@ -2046,18 +2047,18 @@ func (p *Peer) writeVerAckMsg() (err error) {
 func (p *Peer) negotiateInboundProtocol() (err error) {
 	err = p.readRemoteVersionMsg()
 	if err != nil {
-		return
+		return err
 	}
 
 	// !!! We must send the verack message on version otherwise peer will consider us as misbehaving and disconnect.
 	err = p.writeVerAckMsg()
 	if err != nil {
-		return
+		return err
 	}
 
 	err = p.writeLocalVersionMsg()
 	if err != nil {
-		return
+		return err
 	}
 
 	return p.readVerAckMsg()
@@ -2069,18 +2070,18 @@ func (p *Peer) negotiateInboundProtocol() (err error) {
 func (p *Peer) negotiateOutboundProtocol() (err error) {
 	err = p.writeLocalVersionMsg()
 	if err != nil {
-		return
+		return err
 	}
 
 	// We should receive both version and verack but it happens that it can be in any order.
 	err = p.readVerOrVerAck()
 	if err != nil {
-		return
+		return err
 	}
 
 	err = p.readVerOrVerAck()
 	if err != nil {
-		return
+		return err
 	}
 
 	// !!! We must send the verack message on version otherwise peer will consider us as misbehaving and disconnect.

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
 )
 
 const (
@@ -153,7 +153,6 @@ func locatorSummary(locator []*chainhash.Hash, stopHash *chainhash.Hash) string 
 	}
 
 	return fmt.Sprintf("no locator, stop %s", stopHash)
-
 }
 
 // sanitizeString strips any characters which are even remotely dangerous, such

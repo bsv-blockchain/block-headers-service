@@ -8,8 +8,8 @@ import (
 	"net"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
-	"github.com/bitcoin-sv/block-headers-service/transports/p2p/addrmgr"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/transports/p2p/addrmgr"
 )
 
 // TestIPTypes ensures the various functions which determine the type of an IP
@@ -37,11 +37,14 @@ func TestIPTypes(t *testing.T) {
 
 	newIPTest := func(ip string, rfc1918, rfc2544, rfc3849, rfc3927, rfc3964,
 		rfc4193, rfc4380, rfc4843, rfc4862, rfc5737, rfc6052, rfc6145, rfc6598,
-		local, valid, routable bool) ipTest {
+		local, valid, routable bool,
+	) ipTest {
 		nip := net.ParseIP(ip)
 		na := *wire.NewNetAddressIPPort(nip, 8333, wire.SFNodeNetwork)
-		test := ipTest{na, rfc1918, rfc2544, rfc3849, rfc3927, rfc3964, rfc4193, rfc4380,
-			rfc4843, rfc4862, rfc5737, rfc6052, rfc6145, rfc6598, local, valid, routable}
+		test := ipTest{
+			na, rfc1918, rfc2544, rfc3849, rfc3927, rfc3964, rfc4193, rfc4380,
+			rfc4843, rfc4862, rfc5737, rfc6052, rfc6145, rfc6598, local, valid, routable,
+		}
 		return test
 	}
 

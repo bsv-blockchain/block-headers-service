@@ -3,8 +3,8 @@ package testrepository
 import (
 	"fmt"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/notification"
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/notification"
 )
 
 // WebhooksTestRepository in memory WebhooksRepository representation for unit testing.

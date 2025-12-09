@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // defaultTransactionAlloc is the default size used for the backing array
@@ -52,7 +52,6 @@ type MsgBlock struct {
 func (msg *MsgBlock) AddTransaction(tx *MsgTx) error {
 	msg.Transactions = append(msg.Transactions, tx)
 	return nil
-
 }
 
 // ClearTransactions removes all transactions from the message.

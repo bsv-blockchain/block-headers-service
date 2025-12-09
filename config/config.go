@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
 )
 
 const (

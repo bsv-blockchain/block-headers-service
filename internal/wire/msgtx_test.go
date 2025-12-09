@@ -11,8 +11,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
 	"github.com/davecgh/go-spew/spew"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // TestTx tests the MsgTx API.
@@ -95,7 +96,6 @@ func TestTx(t *testing.T) {
 	if txOut.Value != txValue {
 		t.Errorf("NewTxOut: wrong pk script - got %v, want %v",
 			txOut.Value, txValue)
-
 	}
 	if !bytes.Equal(txOut.PkScript, pkScript) {
 		t.Errorf("NewTxOut: wrong pk script - got %v, want %v",

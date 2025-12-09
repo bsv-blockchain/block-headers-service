@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/bitcoin-sv/block-headers-service/service"
 	"github.com/centrifugal/centrifuge"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/service"
 )
 
 // Publisher component exposed by server that is providing a way to send messages via websocket.

@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
 	"github.com/centrifugal/centrifuge"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
 )
 
 // WebsocketPublisher represents websocket server entrypoint used to publish messages via websocket communication.

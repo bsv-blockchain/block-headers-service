@@ -4,10 +4,11 @@ import (
 	"context"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/repository/dto"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/repository/dto"
 )
 
 const (
@@ -16,7 +17,7 @@ const (
 	VALUES(:url, :token_header, :token, :created_at)
 	`
 
-	sqlGetWebhookByURL = ` 
+	sqlGetWebhookByURL = `
 	SELECT url, token_header, token, created_at, last_emit_status, last_emit_timestamp, errors_count, is_active
 	FROM webhooks
 	WHERE url = ?

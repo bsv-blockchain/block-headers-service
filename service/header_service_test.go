@@ -4,15 +4,16 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/fixtures"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testrepository"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
-	"github.com/bitcoin-sv/block-headers-service/repository"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/fixtures"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testrepository"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/repository"
 )
 
 type testData struct {
@@ -410,7 +411,6 @@ func TestLocateHeadersGetHeadersErrorPath(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			_, err := tData.hs.Headers.LocateHeadersGetHeaders(tc.locator, tc.hashstop)
 			assert.Equal(t, err.Error(), tc.expectedErrorMessage)
-
 		})
 	}
 }
@@ -444,7 +444,7 @@ func setUpServices() *testData {
 	}
 }
 
-func createHeader(height int32, hash chainhash.Hash, prevBlock chainhash.Hash) domains.BlockHeader {
+func createHeader(height int32, hash, prevBlock chainhash.Hash) domains.BlockHeader {
 	return domains.BlockHeader{
 		Height:        height,
 		Hash:          hash,

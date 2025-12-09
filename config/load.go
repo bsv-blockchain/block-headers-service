@@ -7,10 +7,11 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/bitcoin-sv/block-headers-service/logging"
 	"github.com/mitchellh/mapstructure"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
+
+	"github.com/bsv-blockchain/block-headers-service/logging"
 )
 
 // Added a mutex lock for a race-condition.

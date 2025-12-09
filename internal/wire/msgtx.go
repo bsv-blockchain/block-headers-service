@@ -11,7 +11,7 @@ import (
 	"io"
 	"strconv"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 const (
@@ -279,7 +279,6 @@ func (msg *MsgTx) TxHash() chainhash.Hash {
 	buf := bytes.NewBuffer(make([]byte, 0, msg.SerializeSize()))
 	_ = msg.Serialize(buf)
 	return chainhash.DoubleHashH(buf.Bytes())
-
 }
 
 // NewTxHash Version10 new tx hash.
@@ -759,7 +758,7 @@ func writeOutPoint(w io.Writer, op *OutPoint) error {
 // memory exhaustion attacks and forced panics through malformed messages.  The
 // fieldName parameter is only used for the error message so it provides more
 // context in the error.
-func readScript(r io.Reader, pver uint32, maxAllowed uint32, fieldName string) ([]byte, error) {
+func readScript(r io.Reader, pver, maxAllowed uint32, fieldName string) ([]byte, error) {
 	count, err := ReadVarInt(r, pver)
 	if err != nil {
 		return nil, err

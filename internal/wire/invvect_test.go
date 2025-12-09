@@ -9,8 +9,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
 	"github.com/davecgh/go-spew/spew"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // TestInvVectStringer tests the stringized output for inventory vector types.
@@ -34,7 +35,6 @@ func TestInvTypeStringer(t *testing.T) {
 			continue
 		}
 	}
-
 }
 
 // TestInvVect tests the InvVect API.
@@ -52,7 +52,6 @@ func TestInvVect(t *testing.T) {
 		t.Errorf("NewInvVect: wrong hash - got %v, want %v",
 			spew.Sdump(iv.Hash), spew.Sdump(hash))
 	}
-
 }
 
 // TestInvVectWire tests the InvVect wire encode and decode for various

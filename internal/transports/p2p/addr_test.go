@@ -4,7 +4,7 @@ import (
 	"net"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
 )
 
 func TestParseAddress(t *testing.T) {

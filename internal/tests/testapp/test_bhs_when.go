@@ -1,6 +1,6 @@
 package testapp
 
-import "github.com/bitcoin-sv/block-headers-service/domains"
+import "github.com/bsv-blockchain/block-headers-service/domains"
 
 // When exposes functions to easy testing operations that can happen in block headers service.
 type When struct {

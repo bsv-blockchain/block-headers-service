@@ -14,7 +14,7 @@ func calcWork(bits uint32) *big.Int {
 	// (1 << 256) / (difficultyNum + 1)
 	denominator := new(big.Int).Add(difficultyNum, big.NewInt(1))
 	// oneLsh256 is 1 shifted left 256 bits.
-	var oneLsh256 = new(big.Int).Lsh(big.NewInt(1), 256)
+	oneLsh256 := new(big.Int).Lsh(big.NewInt(1), 256)
 	return new(big.Int).Div(oneLsh256, denominator)
 }
 

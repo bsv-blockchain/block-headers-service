@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
 )
 
 var (

@@ -5,8 +5,9 @@ import (
 	"net"
 	"strings"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
 )
 
 func seedFromDNS(seeds []chaincfg.DNSSeed, log *zerolog.Logger) []net.IP {

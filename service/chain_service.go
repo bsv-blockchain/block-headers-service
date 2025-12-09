@@ -3,14 +3,15 @@ package service
 import (
 	"strings"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/metrics"
-	"github.com/bitcoin-sv/block-headers-service/repository"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/metrics"
+	"github.com/bsv-blockchain/block-headers-service/repository"
 )
 
 // BlockHasher is an interface which is exposing BlockHash method.

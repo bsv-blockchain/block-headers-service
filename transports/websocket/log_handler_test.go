@@ -3,14 +3,15 @@ package websocket
 import (
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/logging"
 	"github.com/centrifugal/centrifuge"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/logging"
 )
 
 func TestReturningExpectedLoggingLevel(t *testing.T) {
-	//setup
+	// setup
 
 	for name, params := range map[string]struct {
 		appLoggingLevel      zerolog.Level
@@ -47,15 +48,15 @@ func TestReturningExpectedLoggingLevel(t *testing.T) {
 	} {
 		title := "handle " + name + " level"
 		t.Run(title, func(t *testing.T) {
-			//given
+			// given
 			testLogger, err := logging.CreateLogger("test-logger", "console", params.appLoggingLevel.String(), false)
 			assert.NoError(t, err)
 			handler := newLogHandler(testLogger)
 
-			//when
+			// when
 			actual := handler.Level()
 
-			//then
+			// then
 			assert.Equal(t, actual, params.expectedLoggingLevel)
 		})
 	}

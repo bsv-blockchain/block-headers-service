@@ -9,9 +9,10 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testapp"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/webhook"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testapp"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/webhook"
 )
 
 var webhookURL = "http://localhost:8080/api/v1/webhook/notify"
@@ -99,10 +100,10 @@ func createWebhook() (req *http.Request, err error) {
 	}
 	req, err = http.NewRequestWithContext(context.Background(), http.MethodPost, "/api/v1/webhook", bytes.NewReader(webhookBytes))
 	req.Header.Add("Content-Type", "application/json")
-	return
+	return req, err
 }
 
 func revokeWebhook(url string) (req *http.Request, err error) {
 	req, err = http.NewRequestWithContext(context.Background(), http.MethodDelete, "/api/v1/webhook?url="+url, nil)
-	return
+	return req, err
 }

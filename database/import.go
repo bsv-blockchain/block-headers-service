@@ -10,14 +10,15 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/database/sql"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/repository/dto"
-	"github.com/bitcoin-sv/block-headers-service/service"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/database/sql"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/repository/dto"
+	"github.com/bsv-blockchain/block-headers-service/service"
 )
 
 const (
@@ -108,7 +109,7 @@ func dropHeadersFile(tmpHeadersFile *os.File, tmpHeadersFilePath string, log *ze
 	}
 }
 
-func prepareRecord(record []string, previousBlockHash string, cumulatedChainWork string, rowIndex int) (*dto.DbBlockHeader, error) {
+func prepareRecord(record []string, previousBlockHash, cumulatedChainWork string, rowIndex int) (*dto.DbBlockHeader, error) {
 	parsedRow, err := parseRecordToBlockHeadersSource(record, previousBlockHash)
 	if err != nil {
 		return nil, fmt.Errorf("error while parsing values from block on height %d: %w", rowIndex, err)

@@ -3,8 +3,8 @@ package sql
 import (
 	"context"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/repository/dto"
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/repository/dto"
 )
 
 const (
@@ -15,7 +15,7 @@ const (
 	`
 
 	//nolint:gosec
-	sqlGetToken = ` 
+	sqlGetToken = `
 	SELECT token, created_at
 	FROM tokens
 	WHERE token = ?
@@ -73,7 +73,6 @@ func (h *HeadersDb) DeleteToken(ctx context.Context, token string) error {
 
 	if err = tx.Commit(); err != nil {
 		return bhserrors.ErrDeleteToken.Wrap(err)
-
 	}
 
 	return nil

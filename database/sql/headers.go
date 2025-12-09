@@ -4,12 +4,13 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/repository/dto"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/repository/dto"
 )
 
 const (
@@ -85,8 +86,8 @@ const (
 	`
 
 	sqlVerifyIfGenesisPresent = `
-	SELECT hash 
-	FROM headers 
+	SELECT hash
+	FROM headers
 	WHERE height = 0
 	`
 
@@ -174,12 +175,12 @@ const (
 	sqlGetHeadersHeight = `
 	SELECT COALESCE(MAX(height), 0) AS startHeight
 		FROM headers
-		WHERE header_state = 'LONGEST_CHAIN' 
+		WHERE header_state = 'LONGEST_CHAIN'
   			AND hash IN (?)
 	`
 
 	sqlHeaderByHeightRangeLongestChain = `
-	SELECT 
+	SELECT
 		hash, height, version, merkleroot, nonce, bits, chainwork, previous_block, timestamp, header_state, cumulated_work
 	FROM headers
 	WHERE height BETWEEN ? AND ? AND header_state = 'LONGEST_CHAIN';
@@ -296,7 +297,7 @@ func (h *HeadersDb) GetHeaderByHeight(ctx context.Context, height int32, state s
 }
 
 // GetHeaderByHeightRange will return headers from db for given height range (including sended height).
-func (h *HeadersDb) GetHeaderByHeightRange(from int, to int) ([]*dto.DbBlockHeader, error) {
+func (h *HeadersDb) GetHeaderByHeightRange(from, to int) ([]*dto.DbBlockHeader, error) {
 	var bh []*dto.DbBlockHeader
 	if err := h.db.Select(&bh, h.db.Rebind(sqlHeaderByHeightRange), from, to); err != nil {
 		return nil, bhserrors.ErrHeadersForGivenRangeNotFound.Wrap(err)
@@ -379,7 +380,7 @@ func (h *HeadersDb) GetAllTips() ([]*dto.DbBlockHeader, error) {
 }
 
 // GetChainBetweenTwoHashes calculates and returnes chain between 2 hashes.
-func (h *HeadersDb) GetChainBetweenTwoHashes(low string, high string) ([]*dto.DbBlockHeader, error) {
+func (h *HeadersDb) GetChainBetweenTwoHashes(low, high string) ([]*dto.DbBlockHeader, error) {
 	var bh []*dto.DbBlockHeader
 	if err := h.db.Select(&bh, h.db.Rebind(sqlChainBetweenTwoHashes), high, low, low); err != nil {
 		return nil, bhserrors.ErrHeadersForGivenRangeNotFound.Wrap(err)
@@ -442,7 +443,7 @@ func (h *HeadersDb) GetHeadersStopHeight(hashStop string) (int, error) {
 }
 
 // GetHeadersByHeightRange returns headers from db in specified height range.
-func (h *HeadersDb) GetHeadersByHeightRange(from int, to int) ([]*dto.DbBlockHeader, error) {
+func (h *HeadersDb) GetHeadersByHeightRange(from, to int) ([]*dto.DbBlockHeader, error) {
 	var listOfHeaders []*dto.DbBlockHeader
 	if err := h.db.Select(&listOfHeaders, h.db.Rebind(sqlHeaderByHeightRangeLongestChain), from, to); err != nil {
 		return nil, errors.Wrapf(err, "failed to get headers using given range from: %d to: %d", from, to)

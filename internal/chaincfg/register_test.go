@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	//nolint:revive
-	. "github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
+	. "github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
 )
 
 // Define some of the required parameters for a user-registered

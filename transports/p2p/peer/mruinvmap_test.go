@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
 )
 
 // TestMruInventoryMap ensures the MruInventoryMap behaves as expected including

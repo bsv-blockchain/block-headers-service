@@ -8,18 +8,21 @@ import (
 	"io"
 	"os"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/database/sql"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/repository/dto"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/sqlite3"
+
 	// use blank import to use file source driver with the migrate package.
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jmoiron/sqlx"
+
 	// use blank import to register sqlite driver.
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/database/sql"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/repository/dto"
 )
 
 type sqLiteAdapter struct {
@@ -32,8 +35,10 @@ type sqLitePragmaValues struct {
 	CacheSize   int
 }
 
-const sqliteDriverName = "sqlite3"
-const sqliteBatchSize = 500
+const (
+	sqliteDriverName = "sqlite3"
+	sqliteBatchSize  = 500
+)
 
 func (a *sqLiteAdapter) connect(cfg *config.DbConfig) error {
 	dsn := fmt.Sprintf("file:%s?_foreign_keys=true&pooling=true", cfg.SQLite.FilePath)
@@ -79,7 +84,7 @@ func (a *sqLiteAdapter) importHeaders(inputFile *os.File, log *zerolog.Logger) (
 	// prepare db to bulk insterts
 	restorePragmas, err := modifySqLitePragmas(a.db)
 	if err != nil {
-		return
+		return affectedRows, err
 	}
 	defer func() {
 		if rErr := restorePragmas(); rErr != nil {
@@ -89,7 +94,7 @@ func (a *sqLiteAdapter) importHeaders(inputFile *os.File, log *zerolog.Logger) (
 
 	restoreIndexes, err := a.dropTableIndexes(sql.HeadersTableName)
 	if err != nil {
-		return
+		return affectedRows, err
 	}
 	defer func() {
 		if rErr := restoreIndexes(); rErr != nil {
@@ -99,13 +104,13 @@ func (a *sqLiteAdapter) importHeaders(inputFile *os.File, log *zerolog.Logger) (
 
 	// Read from the beginning of the file
 	if _, err = inputFile.Seek(0, 0); err != nil {
-		return
+		return affectedRows, err
 	}
 
 	reader := csv.NewReader(inputFile)
 	_, err = reader.Read() // Skipping the column headers line
 	if err != nil {
-		return
+		return affectedRows, err
 	}
 
 	repo := sql.NewHeadersDb(a.db, log)
@@ -119,7 +124,7 @@ func (a *sqLiteAdapter) importHeaders(inputFile *os.File, log *zerolog.Logger) (
 		rowIndex, previousBlockHash, cumulatedChainWork, err = a.insertHeaders(reader, repo, sqliteBatchSize, previousBlockHash, cumulatedChainWork, rowIndex)
 		if err != nil {
 			affectedRows = rowIndex
-			return
+			return affectedRows, err
 		}
 
 		if guard == rowIndex {
@@ -130,7 +135,7 @@ func (a *sqLiteAdapter) importHeaders(inputFile *os.File, log *zerolog.Logger) (
 		affectedRows = rowIndex
 	}
 
-	return
+	return affectedRows, err
 }
 
 func modifySqLitePragmas(db *sqlx.DB) (func() error, error) {
@@ -199,7 +204,7 @@ func (a *sqLiteAdapter) dropTableIndexes(table string) (func() error, error) {
 	return dropIndexes(a.db, &q)
 }
 
-func (a *sqLiteAdapter) insertHeaders(reader *csv.Reader, repo *sql.HeadersDb, batchSize int, previousBlockHash string, cumulatedLastBlockChainWork string, rowIndex int) (lastRowIndex int, lastBlockHash string, cumulatedChainwork string, err error) {
+func (a *sqLiteAdapter) insertHeaders(reader *csv.Reader, repo *sql.HeadersDb, batchSize int, previousBlockHash, cumulatedLastBlockChainWork string, rowIndex int) (lastRowIndex int, lastBlockHash, cumulatedChainwork string, err error) {
 	lastRowIndex = rowIndex
 	lastBlockHash = previousBlockHash
 	batch := make([]dto.DbBlockHeader, 0, batchSize)
@@ -213,7 +218,7 @@ func (a *sqLiteAdapter) insertHeaders(reader *csv.Reader, repo *sql.HeadersDb, b
 				break
 			}
 			err = fmt.Errorf("error reading record: %v", err)
-			return
+			return lastRowIndex, lastBlockHash, cumulatedChainwork, err
 		}
 
 		if len(record) == 0 {
@@ -222,7 +227,7 @@ func (a *sqLiteAdapter) insertHeaders(reader *csv.Reader, repo *sql.HeadersDb, b
 		var block *dto.DbBlockHeader
 		block, err = prepareRecord(record, lastBlockHash, cumulatedChainwork, lastRowIndex)
 		if err != nil {
-			return
+			return lastRowIndex, lastBlockHash, cumulatedChainwork, err
 		}
 		batch = append(batch, *block)
 
@@ -232,8 +237,8 @@ func (a *sqLiteAdapter) insertHeaders(reader *csv.Reader, repo *sql.HeadersDb, b
 	}
 
 	if err = repo.CreateMultiple(context.Background(), batch); err != nil {
-		return
+		return lastRowIndex, lastBlockHash, cumulatedChainwork, err
 	}
 
-	return
+	return lastRowIndex, lastBlockHash, cumulatedChainwork, err
 }

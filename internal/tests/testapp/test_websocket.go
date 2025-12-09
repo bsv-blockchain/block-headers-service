@@ -7,10 +7,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/wait"
-	"github.com/bitcoin-sv/block-headers-service/transports/websocket"
 	"github.com/centrifugal/centrifuge-go"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/wait"
+	"github.com/bsv-blockchain/block-headers-service/transports/websocket"
 )
 
 // Websocket exposes functions to easy testing of block headers service websocket communication.
@@ -35,7 +36,7 @@ func (w *Websocket) Publisher() *WebsocketPublisher {
 }
 
 // Publish sends data to websocket channel.
-func (p *WebsocketPublisher) Publish(channel string, data string) {
+func (p *WebsocketPublisher) Publish(channel, data string) {
 	p.log.Debug().Msgf("Trying to publish to channel %s data: %s", channel, data)
 	_, err := p.publisher.Publish(channel, []byte(data))
 	if err != nil {

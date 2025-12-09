@@ -5,12 +5,13 @@
 package p2psync
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
-	"github.com/bitcoin-sv/block-headers-service/service"
-	"github.com/bitcoin-sv/block-headers-service/transports/p2p/peer"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/service"
+	"github.com/bsv-blockchain/block-headers-service/transports/p2p/peer"
 )
 
 // PeerNotifier exposes methods to notify peers of status changes to

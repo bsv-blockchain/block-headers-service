@@ -4,13 +4,14 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/service"
-	router "github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/service"
+	router "github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/routes"
 )
 
 const (

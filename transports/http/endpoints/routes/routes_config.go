@@ -1,8 +1,9 @@
 package router
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/config"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
 )
 
 // RootEndpointsFunc wrapping type for function to mark it as implementation of RootEndpoints.

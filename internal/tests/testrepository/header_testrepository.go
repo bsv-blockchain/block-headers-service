@@ -5,10 +5,10 @@ import (
 	"slices"
 	"sort"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/fixtures"
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/fixtures"
 )
 
 // HeaderTestRepository in memory HeadersRepository representation for unit testing.
@@ -57,7 +57,7 @@ func (r *HeaderTestRepository) GetHeaderByHeight(height int32) (*domains.BlockHe
 }
 
 // GetHeaderByHeightRange returns headers from db in specified height range.
-func (r *HeaderTestRepository) GetHeaderByHeightRange(from int, to int) ([]*domains.BlockHeader, error) {
+func (r *HeaderTestRepository) GetHeaderByHeightRange(from, to int) ([]*domains.BlockHeader, error) {
 	filteredHeaders := make([]*domains.BlockHeader, 0)
 
 	for i, header := range *r.db {
@@ -186,7 +186,7 @@ func (r *HeaderTestRepository) GetAllTips() ([]*domains.BlockHeader, error) {
 }
 
 // GetChainBetweenTwoHashes returns all headers between two hashes.
-func (r *HeaderTestRepository) GetChainBetweenTwoHashes(low string, high string) ([]*domains.BlockHeader, error) {
+func (r *HeaderTestRepository) GetChainBetweenTwoHashes(low, high string) ([]*domains.BlockHeader, error) {
 	hLow := findHeader(low, *r.db)
 	hHigh := findHeader(high, *r.db)
 	headers, err := r.GetHeaderByHeightRange(int(hLow.Height), int(hHigh.Height))
@@ -344,7 +344,7 @@ func (r *HeaderTestRepository) GetHeadersStartHeight(hashtable []string) (int, e
 }
 
 // GetHeadersByHeightRange returns headers from db in specified height range.
-func (r *HeaderTestRepository) GetHeadersByHeightRange(from int, to int) ([]*domains.BlockHeader, error) {
+func (r *HeaderTestRepository) GetHeadersByHeightRange(from, to int) ([]*domains.BlockHeader, error) {
 	filteredHeaders := make([]*domains.BlockHeader, 0)
 	for _, header := range *r.db {
 		if header.Height >= int32(from) && header.Height <= int32(to) {

@@ -8,12 +8,13 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/assert"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testapp"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/merkleroots"
 	"github.com/stretchr/testify/require"
+
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/assert"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testapp"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/merkleroots"
 )
 
 func TestReturnSuccessFromVerify(t *testing.T) {
@@ -357,7 +358,6 @@ func TestMerkleRootsSuccess(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-
 			// setup
 			bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithAPIAuthorizationDisabled(), testapp.WithLongestChain())
 			defer cleanup()
@@ -410,7 +410,6 @@ func TestMerkleRootsFailure(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-
 			// setup
 			bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChainFork(), testapp.WithAPIAuthorizationDisabled())
 			defer cleanup()

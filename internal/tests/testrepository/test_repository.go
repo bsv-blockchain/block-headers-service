@@ -1,10 +1,10 @@
 package testrepository
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/fixtures"
-	"github.com/bitcoin-sv/block-headers-service/notification"
-	"github.com/bitcoin-sv/block-headers-service/repository"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/fixtures"
+	"github.com/bsv-blockchain/block-headers-service/notification"
+	"github.com/bsv-blockchain/block-headers-service/repository"
 )
 
 // TestRepositories is a struct used for testing block headers service repositories.

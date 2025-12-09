@@ -3,9 +3,10 @@ package notification
 import (
 	"strings"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/config"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/config"
 )
 
 // WebhooksService represents Webhooks service and provide access to repositories.
@@ -61,7 +62,6 @@ func (s *WebhooksService) DeleteWebhook(value string) error {
 // Notify notifies all active webhooks.
 func (s *WebhooksService) Notify(event Event) {
 	webhooks, err := s.webhooks.GetAllWebhooks()
-
 	if err != nil {
 		s.log.Error().Msgf("Cannot load webhooks to notify. %v", err)
 		return

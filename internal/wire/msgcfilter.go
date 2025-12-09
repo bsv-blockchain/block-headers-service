@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // FilterType is used to represent a filter type.
@@ -110,7 +110,8 @@ func (msg *MsgCFilter) MaxPayloadLength(_ uint32) uint32 {
 // NewMsgCFilter returns a new bitcoin cfilter message that conforms to the
 // Message interface. See MsgCFilter for details.
 func NewMsgCFilter(filterType FilterType, blockHash *chainhash.Hash,
-	data []byte) *MsgCFilter {
+	data []byte,
+) *MsgCFilter {
 	return &MsgCFilter{
 		FilterType: filterType,
 		BlockHash:  *blockHash,

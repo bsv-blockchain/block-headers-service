@@ -6,8 +6,9 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
 )
 
 // InitListeners initializes the configured net listeners and adds any bound

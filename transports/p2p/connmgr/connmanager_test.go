@@ -13,8 +13,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/logging"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/logging"
 )
 
 func init() {

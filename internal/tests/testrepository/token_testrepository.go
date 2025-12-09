@@ -3,7 +3,7 @@ package testrepository
 import (
 	"errors"
 
-	"github.com/bitcoin-sv/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/domains"
 )
 
 // TokensTestRepository in memory TokensRepository representation for unit testing.

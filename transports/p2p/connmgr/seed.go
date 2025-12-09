@@ -11,9 +11,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
 )
 
 const (
@@ -32,8 +33,8 @@ type LookupFunc func(string) ([]net.IP, error)
 
 // SeedFromDNS uses DNS seeding to populate the address manager with peers.
 func SeedFromDNS(chainParams *chaincfg.Params, reqServices wire.ServiceFlag,
-	lookupFn LookupFunc, seedFn OnSeed, log *zerolog.Logger) {
-
+	lookupFn LookupFunc, seedFn OnSeed, log *zerolog.Logger,
+) {
 	for _, dnsseed := range chainParams.DNSSeeds {
 		var host string
 		if !dnsseed.HasFiltering || reqServices == wire.SFNodeNetwork || reqServices == wire.SFspv {

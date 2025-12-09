@@ -1,15 +1,16 @@
 package service
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
-	"github.com/bitcoin-sv/block-headers-service/notification"
-	"github.com/bitcoin-sv/block-headers-service/repository"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/client"
-	peerpkg "github.com/bitcoin-sv/block-headers-service/transports/p2p/peer"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/notification"
+	"github.com/bsv-blockchain/block-headers-service/repository"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/client"
+	peerpkg "github.com/bsv-blockchain/block-headers-service/transports/p2p/peer"
 )
 
 // Network is an interface which represents methods required for Network service.
@@ -29,8 +30,8 @@ type Headers interface {
 	GetTipHeight() int32
 	CountHeaders() int
 	GetHeaderByHash(hash string) (*domains.BlockHeader, error)
-	GetHeadersByHeight(height int, count int) ([]*domains.BlockHeader, error)
-	GetHeaderAncestorsByHash(hash string, ancestorHash string) ([]*domains.BlockHeader, error)
+	GetHeadersByHeight(height, count int) ([]*domains.BlockHeader, error)
+	GetHeaderAncestorsByHash(hash, ancestorHash string) ([]*domains.BlockHeader, error)
 	GetCommonAncestor(hashes []string) (*domains.BlockHeader, error)
 	GetHeadersState(hash string) (*domains.BlockHeaderState, error)
 	GetTips() ([]*domains.BlockHeader, error)

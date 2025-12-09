@@ -3,13 +3,14 @@ package webhook
 import (
 	"net/http"
 
-	"github.com/bitcoin-sv/block-headers-service/bhserrors"
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/notification"
-	"github.com/bitcoin-sv/block-headers-service/service"
-	router "github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/bhserrors"
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/notification"
+	"github.com/bsv-blockchain/block-headers-service/service"
+	router "github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/routes"
 )
 
 // Webhooks is an interface which represents methods required for Webhooks service.
@@ -53,7 +54,6 @@ func (h *handler) RegisterAPIEndpoints(router *gin.RouterGroup, _ *config.HTTPCo
 func (h *handler) registerWebhook(c *gin.Context) {
 	var reqBody Request
 	err := c.Bind(&reqBody)
-
 	if err != nil {
 		bhserrors.ErrorResponse(c, bhserrors.ErrBindBody.Wrap(err), h.log)
 	}

@@ -1,9 +1,10 @@
 package service
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/repository"
 	"github.com/dchest/uniuri"
+
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/repository"
 )
 
 // TokenService represents Token service and provide access to repositories.

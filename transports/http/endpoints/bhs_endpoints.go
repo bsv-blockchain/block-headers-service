@@ -3,22 +3,23 @@ package endpoints
 import (
 	"errors"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/service"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/auth"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/access"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/headers"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/merkleroots"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/network"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/profile"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/tips"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/api/webhook"
-	router "github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/routes"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/status"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints/swagger"
-	httpserver "github.com/bitcoin-sv/block-headers-service/transports/http/server"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/service"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/auth"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/access"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/headers"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/merkleroots"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/network"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/profile"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/tips"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/api/webhook"
+	router "github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/routes"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/status"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints/swagger"
+	httpserver "github.com/bsv-blockchain/block-headers-service/transports/http/server"
 )
 
 // SetupRoutes main point where we're registering endpoints registrars (handlers that will register endpoints in gin engine)

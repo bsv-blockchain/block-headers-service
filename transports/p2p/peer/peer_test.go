@@ -14,12 +14,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/internal/wire"
-	"github.com/bitcoin-sv/block-headers-service/transports/p2p/peer"
 	"github.com/btcsuite/go-socks/socks"
 	"github.com/rs/zerolog"
+
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/wire"
+	"github.com/bsv-blockchain/block-headers-service/transports/p2p/peer"
 )
 
 // fixedExcessiveBlockSize should not be the default -we want to ensure it will work in all cases.
@@ -178,7 +179,8 @@ func TestPeerConnection(t *testing.T) {
 				verack <- "verack received"
 			},
 			OnWrite: func(_ *peer.Peer, _ int, msg wire.Message,
-				_ error) {
+				_ error,
+			) {
 				if _, ok := msg.(*wire.MsgVerAck); ok {
 					verack <- "verack send"
 				}
@@ -622,7 +624,7 @@ func TestOutboundPeer(t *testing.T) {
 	p.Disconnect()
 
 	// Test NewestBlock
-	var newestBlock = func() (*chainhash.Hash, int32, error) {
+	newestBlock := func() (*chainhash.Hash, int32, error) {
 		hashStr := "14a0810ac680a3eb3f82edc878cea25ec41d6b790744e5daeef"
 		hash, err := chainhash.NewHashFromStr(hashStr)
 		if err != nil {

@@ -13,7 +13,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
 )
 
 // genesisCoinbaseTx is the coinbase transaction for the genesis blocks for
@@ -339,7 +339,6 @@ func BenchmarkSerializeTx(b *testing.B) {
 	tx := blockOne.Transactions[0]
 	for i := 0; i < b.N; i++ {
 		tx.Serialize(ioutil.Discard)
-
 	}
 }
 

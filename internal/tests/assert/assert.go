@@ -19,7 +19,7 @@ func Equal[T comparable](t *testing.T, actual, expected T) {
 
 // EqualBytes return error if two given byte arrays are not equal.
 // Used mainly in tests.
-func EqualBytes(t *testing.T, actual []byte, expected []byte) {
+func EqualBytes(t *testing.T, actual, expected []byte) {
 	if !bytes.Equal(actual, expected) {
 		t.Errorf("got: %s; want: %s", actual, expected)
 	}

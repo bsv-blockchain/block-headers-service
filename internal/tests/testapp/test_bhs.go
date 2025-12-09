@@ -7,17 +7,18 @@ import (
 	"os"
 	"testing"
 
-	"github.com/bitcoin-sv/block-headers-service/config"
-	"github.com/bitcoin-sv/block-headers-service/internal/tests/testrepository"
-	"github.com/bitcoin-sv/block-headers-service/notification"
-	"github.com/bitcoin-sv/block-headers-service/repository"
-	"github.com/bitcoin-sv/block-headers-service/service"
-	"github.com/bitcoin-sv/block-headers-service/transports/http/endpoints"
-	httpserver "github.com/bitcoin-sv/block-headers-service/transports/http/server"
-	"github.com/bitcoin-sv/block-headers-service/transports/websocket"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
+
+	"github.com/bsv-blockchain/block-headers-service/config"
+	"github.com/bsv-blockchain/block-headers-service/internal/tests/testrepository"
+	"github.com/bsv-blockchain/block-headers-service/notification"
+	"github.com/bsv-blockchain/block-headers-service/repository"
+	"github.com/bsv-blockchain/block-headers-service/service"
+	"github.com/bsv-blockchain/block-headers-service/transports/http/endpoints"
+	httpserver "github.com/bsv-blockchain/block-headers-service/transports/http/server"
+	"github.com/bsv-blockchain/block-headers-service/transports/websocket"
 )
 
 type bhsOpt interface{}

@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"github.com/bitcoin-sv/block-headers-service/domains"
-	"github.com/bitcoin-sv/block-headers-service/internal/chaincfg/chainhash"
-	"github.com/bitcoin-sv/block-headers-service/notification"
+	"github.com/bsv-blockchain/block-headers-service/domains"
+	"github.com/bsv-blockchain/block-headers-service/internal/chaincfg/chainhash"
+	"github.com/bsv-blockchain/block-headers-service/notification"
 )
 
 // Headers is a interface which represents methods performed on header table in defined storage.
@@ -12,7 +12,7 @@ type Headers interface {
 	AddMultipleHeadersToDatabase([]domains.BlockHeader) error
 	UpdateState([]chainhash.Hash, domains.HeaderState) error
 	GetHeaderByHeight(height int32) (*domains.BlockHeader, error)
-	GetHeaderByHeightRange(from int, to int) ([]*domains.BlockHeader, error)
+	GetHeaderByHeightRange(from, to int) ([]*domains.BlockHeader, error)
 	GetLongestChainHeadersFromHeight(height int32) ([]*domains.BlockHeader, error)
 	GetStaleChainHeadersBackFrom(hash string) ([]*domains.BlockHeader, error)
 	GetCurrentHeight() (int, error)
@@ -25,9 +25,9 @@ type Headers interface {
 	GetTip() (*domains.BlockHeader, error)
 	GetAllTips() ([]*domains.BlockHeader, error)
 	GetAncestorOnHeight(hash string, height int32) (*domains.BlockHeader, error)
-	GetChainBetweenTwoHashes(low string, high string) ([]*domains.BlockHeader, error)
+	GetChainBetweenTwoHashes(low, high string) ([]*domains.BlockHeader, error)
 	GetHeadersStartHeight(hashtable []string) (int, error)
-	GetHeadersByHeightRange(from int, to int) ([]*domains.BlockHeader, error)
+	GetHeadersByHeightRange(from, to int) ([]*domains.BlockHeader, error)
 	GetHeadersStopHeight(hashStop string) (int, error)
 }
 
