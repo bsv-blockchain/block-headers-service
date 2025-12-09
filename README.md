@@ -57,10 +57,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Block header service is a go service which connects into BSV P2P network to gather and then serve information about all exisiting and new headers. It is build to work as a standaolne app or a module in bigger system.
+Block header service is a go service which connects into BSV P2P network to gather and then serve information about all existing and new headers. It is build to work as a standalone app or a module in bigger system.
 
 #### Main functionality
-The main functionality of the application is synchornization with peers and collecting all headers. After starting the server, it creates default objects and connects to BSV P2P network. Application has defined checkpoints (specific headers) which are used in synchronization. During this process, server is asking peers for headers (from checkpoint to checkpoint) in batches of 2000. Every header received from peers is saved in memory. After full synchronization, server is changing the operating mode and start to listening for new header. After when new block has been mined, this information should be sended from peers to our server.
+The main functionality of the application is synchronization with peers and collecting all headers. After starting the server, it creates default objects and connects to BSV P2P network. Application has defined checkpoints (specific headers) which are used in synchronization. During this process, server is asking peers for headers (from checkpoint to checkpoint) in batches of 2000. Every header received from peers is saved in memory. After full synchronization, server is changing the operating mode and start to listening for new header. After when new block has been mined, this information should be sent from peers to our server.
 
 For in-depth information and guidance, please refer to the [SPV Wallet Documentation](https://bsvblockchain.gitbook.io/docs).
 
@@ -114,7 +114,7 @@ you can generate such with the following request:
 POST https://{{block-headers-service_url}}/api/v1/access
 Authorization: Bearer replace_me_with_token_you_want_to_use_as_admin_token
 ```
-In response you should receive something like
+In response, you should receive something like
 ```json
 {
   "token": "some_token_created_by_server",
@@ -171,12 +171,12 @@ Creating a new webhook is done via POST request
   - url have to include http or https protocol example: `https://test-url.com`
   - requiredAuth is used to define authorization for webhook
     - type `BEARER` - token will be placed in `Authorization: Bearer {{token}}` header
-    - type `CUSTOM_HEADER`  - authorization header will be build from given variables `{{header}}: {{token}}`
+    - type `CUSTOM_HEADER`  - authorization header will be built from given variables `{{header}}: {{token}}`
 
 Example response:
 ````json
 {
-  "url": "http://example.com/api/v1/webhook/new-header",
+  "url": "https://example.com/api/v1/webhook/new-header",
   "createdAt": "2023-05-11T13:05:23.297808+02:00",
   "lastEmitStatus": "",
   "lastEmitTimestamp": "0001-01-01T00:00:00Z",
