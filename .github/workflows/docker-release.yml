@@ -139,7 +139,7 @@ jobs:
           # TARGETPLATFORM format: linux/amd64, linux/arm64, linux/arm/v7
           # Artifacts are downloaded as: dist/linux/{amd64,arm64,arm}/block-headers-service
 
-          # Create arm/v7 directory and copy arm binary there
+          # Create arm/v7 directory and copy arm binary there (Docker uses arm/v7, Go uses arm)
           mkdir -p dist/linux/arm/v7
           cp dist/linux/arm/block-headers-service dist/linux/arm/v7/
 

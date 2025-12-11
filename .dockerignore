@@ -20,7 +20,7 @@ node_modules/
 vendor/
 
 # Binaries for programs and plugins
-dist/
+# Note: dist/ is NOT ignored - needed for multi-arch Docker builds with pre-built binaries
 gin-bin
 *.exe
 *.exe~
