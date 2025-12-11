@@ -19,7 +19,7 @@ import (
 
 func TestReturnSuccessFromVerify(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
 	defer cleanup()
 	query := []domains.MerkleRootConfirmationRequestItem{
 		{
@@ -66,7 +66,7 @@ func TestReturnSuccessFromVerify(t *testing.T) {
 
 func TestReturnFailureFromVerifyWhenAuthorizationIsTurnedOnAndCalledWithoutToken(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 	query := []domains.MerkleRootConfirmationRequestItem{}
 	expectedResult := struct {
@@ -90,7 +90,7 @@ func TestReturnFailureFromVerifyWhenAuthorizationIsTurnedOnAndCalledWithoutToken
 
 func TestReturnInvalidFromVerify(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
 	defer cleanup()
 	query := []domains.MerkleRootConfirmationRequestItem{
 		{
@@ -157,7 +157,7 @@ func TestReturnInvalidFromVerify(t *testing.T) {
 
 func TestReturnPartialSuccessFromVerify(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
 	defer cleanup()
 	query := []domains.MerkleRootConfirmationRequestItem{
 		{
@@ -214,7 +214,7 @@ func TestReturnPartialSuccessFromVerify(t *testing.T) {
 
 func TestReturnBadRequestErrorFromVerifyWhenGivenEmtpyArray(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
 	defer cleanup()
 	query := []domains.MerkleRootConfirmationRequestItem{}
 	expectedResult := struct {
@@ -359,7 +359,7 @@ func TestMerkleRootsSuccess(t *testing.T) {
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
 			// setup
-			bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithAPIAuthorizationDisabled(), testapp.WithLongestChain())
+			bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithAPIAuthorizationDisabled(), testapp.WithLongestChain())
 			defer cleanup()
 
 			// when
@@ -411,7 +411,7 @@ func TestMerkleRootsFailure(t *testing.T) {
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
 			// setup
-			bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChainFork(), testapp.WithAPIAuthorizationDisabled())
+			bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithLongestChainFork(), testapp.WithAPIAuthorizationDisabled())
 			defer cleanup()
 
 			// when

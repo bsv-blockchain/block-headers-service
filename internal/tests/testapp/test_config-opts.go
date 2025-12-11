@@ -1,6 +1,8 @@
 package testapp
 
 import (
+	"net"
+
 	"github.com/bsv-blockchain/block-headers-service/config"
 	"github.com/bsv-blockchain/block-headers-service/internal/tests/testrepository"
 )
@@ -24,4 +26,22 @@ func WithLongestChainFork() RepoOpt {
 	return func(r *testrepository.TestRepositories) {
 		r.Headers.FillWithLongestChainWithFork()
 	}
+}
+
+// WithRandomPort configures the test to use a random available port.
+// This prevents port conflicts when running tests in parallel.
+func WithRandomPort() ConfigOpt {
+	return func(c *config.AppConfig) {
+		c.HTTP.Port = getFreePort()
+	}
+}
+
+// getFreePort asks the OS for an available port.
+func getFreePort() int {
+	listener, err := net.Listen("tcp", ":0")
+	if err != nil {
+		panic(err)
+	}
+	defer listener.Close()
+	return listener.Addr().(*net.TCPAddr).Port
 }

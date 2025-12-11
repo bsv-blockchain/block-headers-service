@@ -13,7 +13,7 @@ import (
 
 func TestWebsocketCommunicationWithoutAuthentication(t *testing.T) {
 	// setup
-	p, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithAPIAuthorizationDisabled())
+	p, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithAPIAuthorizationDisabled())
 	defer cleanup()
 
 	// given
@@ -39,7 +39,7 @@ func TestWebsocketCommunicationWithoutAuthentication(t *testing.T) {
 
 func TestWebsocketCommunicationWithAuthentication(t *testing.T) {
 	// setup
-	p, cleanup := testapp.NewTestBlockHeaderService(t)
+	p, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// given
@@ -57,7 +57,7 @@ func TestWebsocketCommunicationWithAuthentication(t *testing.T) {
 
 func TestWebsocketCommunicationWithInvalidAuthentication(t *testing.T) {
 	// setup
-	p, cleanup := testapp.NewTestBlockHeaderService(t)
+	p, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// given

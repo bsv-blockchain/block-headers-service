@@ -35,7 +35,7 @@ var expectedTip = tips.TipStateResponse{
 func TestGetTips(t *testing.T) {
 	t.Run("failure when authorization on and empty auth header", func(t *testing.T) {
 		// given
-		bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+		bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 		defer cleanup()
 		expectedResult := struct {
 			code int
@@ -55,7 +55,7 @@ func TestGetTips(t *testing.T) {
 
 	t.Run("success", func(t *testing.T) {
 		// given
-		bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
+		bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
 		defer cleanup()
 		expectedResult := struct {
 			code int
@@ -82,7 +82,7 @@ func TestGetTips(t *testing.T) {
 func TestGetTipLongest(t *testing.T) {
 	t.Run("failure when authorization on and empty auth header", func(t *testing.T) {
 		// given
-		bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+		bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 		defer cleanup()
 		expectedResult := struct {
 			code int
@@ -102,7 +102,7 @@ func TestGetTipLongest(t *testing.T) {
 
 	t.Run("success", func(t *testing.T) {
 		// given
-		bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
+		bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithLongestChain(), testapp.WithAPIAuthorizationDisabled())
 		defer cleanup()
 		expectedResult := struct {
 			code int

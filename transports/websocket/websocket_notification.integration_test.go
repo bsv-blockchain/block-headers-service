@@ -31,7 +31,7 @@ const (
 
 func TestShouldNotifyWebsocketAboutNewHeader(t *testing.T) {
 	// setup
-	p, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithAPIAuthorizationDisabled())
+	p, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort(), testapp.WithAPIAuthorizationDisabled())
 	defer cleanup()
 
 	// given
