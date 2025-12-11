@@ -19,10 +19,10 @@ on:
         description: 'Image tag (leave empty for latest only)'
         required: false
         type: string
-  # Ready to enable for automatic releases:
-  # push:
-  #   tags:
-  #     - 'v*'
+        # Ready to enable for automatic releases:
+        # push:
+        #   tags:
+        #     - 'v*'
 
 # Security: Restrictive default permissions with job-level overrides for least privilege access
 permissions: {}
