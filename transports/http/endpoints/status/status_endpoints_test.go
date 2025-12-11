@@ -10,7 +10,7 @@ import (
 
 func TestReturnSuccessFromStatus(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// when
@@ -24,7 +24,7 @@ func TestReturnSuccessFromStatus(t *testing.T) {
 
 func TestReturnSuccessFromStatusWhenAuthorizationIsTurnedOnAndCalledWithoutToken(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// when

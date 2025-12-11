@@ -18,7 +18,7 @@ const EmptyToken = ""
 // Tests the GET /access endpoint without authorization header.
 func TestAccessEndpointWithoutAuthHeader(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// when
@@ -34,7 +34,7 @@ func TestAccessEndpointWithoutAuthHeader(t *testing.T) {
 func TestAccessEndpointWithGlobalAuthHeader(t *testing.T) {
 	// setup
 	cfg := config.GetDefaultAppConfig()
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// given
@@ -56,7 +56,7 @@ func TestAccessEndpointWithGlobalAuthHeader(t *testing.T) {
 // Tests the GET /access endpoint with wrong header.
 func TestAccessEndpointWithWrongAuthHeader(t *testing.T) {
 	// setup
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// when
@@ -71,7 +71,7 @@ func TestAccessEndpointWithWrongAuthHeader(t *testing.T) {
 func TestAccessEndpointWithCreatedAuthHeader(t *testing.T) {
 	// setup
 	cfg := config.GetDefaultAppConfig()
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// when
@@ -111,7 +111,7 @@ func TestAccessEndpointWithCreatedAuthHeader(t *testing.T) {
 func TestDeleteTokenEndpoint(t *testing.T) {
 	// setup
 	cfg := config.GetDefaultAppConfig()
-	bhs, cleanup := testapp.NewTestBlockHeaderService(t)
+	bhs, cleanup := testapp.NewTestBlockHeaderService(t, testapp.WithRandomPort())
 	defer cleanup()
 
 	// when
