@@ -1,0 +1,207 @@
+# ------------------------------------------------------------------------------------
+#  Docker Release (Multi-Architecture)
+#
+#  Purpose: Build multi-architecture Docker images and push to GitHub Container Registry
+#  Architectures: linux/amd64, linux/arm64, linux/arm/v7
+#  Maintainer: @mrz1836
+#
+# ------------------------------------------------------------------------------------
+
+name: Docker Release
+
+# --------------------------------------------------------------------
+# Trigger Configuration
+# --------------------------------------------------------------------
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag (leave empty for latest only)'
+        required: false
+        type: string
+  # Ready to enable for automatic releases:
+  # push:
+  #   tags:
+  #     - 'v*'
+
+# Security: Restrictive default permissions with job-level overrides for least privilege access
+permissions: {}
+
+# --------------------------------------------------------------------
+# Concurrency Control
+# --------------------------------------------------------------------
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ----------------------------------------------------------------------------------
+  # Build Binaries for Each Architecture
+  # ----------------------------------------------------------------------------------
+  build-binaries:
+    name: Build Binary (${{ matrix.goarch }})
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+            cc: gcc
+          - goos: linux
+            goarch: arm64
+            cc: aarch64-linux-gnu-gcc
+          - goos: linux
+            goarch: arm
+            cc: arm-linux-gnueabihf-gcc
+    steps:
+      # --------------------------------------------------------------------
+      # Checkout code
+      # --------------------------------------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      # --------------------------------------------------------------------
+      # Set up Go
+      # --------------------------------------------------------------------
+      - name: Set up Go
+        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
+        with:
+          go-version-file: go.mod
+
+      # --------------------------------------------------------------------
+      # Install cross-compilers for ARM architectures
+      # --------------------------------------------------------------------
+      - name: Install cross-compiler
+        if: matrix.goarch != 'amd64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu gcc-arm-linux-gnueabihf
+
+      # --------------------------------------------------------------------
+      # Build binary with CGO for the target architecture
+      # --------------------------------------------------------------------
+      - name: Build binary
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CC: ${{ matrix.cc }}
+          CGO_ENABLED: 1
+        run: |
+          mkdir -p dist/${{ matrix.goos }}/${{ matrix.goarch }}
+          go build -o dist/${{ matrix.goos }}/${{ matrix.goarch }}/block-headers-service ./cmd/
+
+      # --------------------------------------------------------------------
+      # Upload binary as artifact
+      # --------------------------------------------------------------------
+      - name: Upload binary
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: binary-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: dist/
+          retention-days: 1
+
+  # ----------------------------------------------------------------------------------
+  # Build and Push Multi-Architecture Docker Image
+  # ----------------------------------------------------------------------------------
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-24.04
+    needs: build-binaries
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      # --------------------------------------------------------------------
+      # Checkout code
+      # --------------------------------------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      # --------------------------------------------------------------------
+      # Download all binary artifacts
+      # --------------------------------------------------------------------
+      - name: Download all binaries
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: binary-*
+          path: dist/
+          merge-multiple: true
+
+      # --------------------------------------------------------------------
+      # Prepare dist structure for release Dockerfile
+      # --------------------------------------------------------------------
+      - name: Prepare dist structure
+        run: |
+          # release/Dockerfile expects: ./dist/$TARGETPLATFORM/block-headers-service
+          # TARGETPLATFORM format: linux/amd64, linux/arm64, linux/arm/v7
+          # Artifacts are downloaded as: dist/linux/{amd64,arm64,arm}/block-headers-service
+
+          # Create arm/v7 directory and copy arm binary there
+          mkdir -p dist/linux/arm/v7
+          cp dist/linux/arm/block-headers-service dist/linux/arm/v7/
+
+          # Make all binaries executable
+          chmod +x dist/linux/amd64/block-headers-service
+          chmod +x dist/linux/arm64/block-headers-service
+          chmod +x dist/linux/arm/v7/block-headers-service
+
+          # Debug: show structure
+          echo "Dist structure:"
+          find dist -type f -name "block-headers-service"
+
+      # --------------------------------------------------------------------
+      # Set up QEMU for multi-architecture builds
+      # --------------------------------------------------------------------
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
+
+      # --------------------------------------------------------------------
+      # Set up Docker Buildx
+      # --------------------------------------------------------------------
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
+
+      # --------------------------------------------------------------------
+      # Generate Docker metadata (tags and labels)
+      # --------------------------------------------------------------------
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=${{ inputs.tag }},enable=${{ inputs.tag != '' }}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      # --------------------------------------------------------------------
+      # Log in to GHCR
+      # --------------------------------------------------------------------
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # --------------------------------------------------------------------
+      # Build and push multi-architecture Docker image
+      # --------------------------------------------------------------------
+      - name: Build and push Docker image
+        uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # v6.16.0
+        with:
+          context: .
+          file: release/Dockerfile
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            project_name=block-headers-service
+            repository_owner=bsv-blockchain
