@@ -87,6 +87,7 @@ jobs:
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
+          GOARM: ${{ matrix.goarch == 'arm' && '7' || '' }}
           CC: ${{ matrix.cc }}
           CGO_ENABLED: 1
         run: |
@@ -139,9 +140,9 @@ jobs:
           # TARGETPLATFORM format: linux/amd64, linux/arm64, linux/arm/v7
           # Artifacts are downloaded as: dist/linux/{amd64,arm64,arm}/block-headers-service
 
-          # Create arm/v7 directory and copy arm binary there (Docker uses arm/v7, Go uses arm)
+          # Create arm/v7 directory and move arm binary there (Docker uses arm/v7, Go uses arm)
           mkdir -p dist/linux/arm/v7
-          cp dist/linux/arm/block-headers-service dist/linux/arm/v7/
+          mv dist/linux/arm/block-headers-service dist/linux/arm/v7/
 
           # Make all binaries executable
           chmod +x dist/linux/amd64/block-headers-service
