@@ -191,7 +191,7 @@ jobs:
       - name: 💾 Restore go-coverage binary cache (production)
         id: go-coverage-cache
         if: env.GO_COVERAGE_USE_LOCAL != 'true'
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: |
             ~/.cache/go-coverage-bin
@@ -202,7 +202,7 @@ jobs:
       - name: 💾 Restore go-coverage binary cache (local)
         id: go-coverage-local-cache
         if: env.GO_COVERAGE_USE_LOCAL == 'true'
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: |
             ~/.cache/go-coverage-local
@@ -451,14 +451,14 @@ jobs:
                       # Validate extracted history files contain actual coverage data
                       EXTRACTED_FILES=$(find . -name "*.json" -type f 2>/dev/null | wc -l || echo "0")
                       VALID_FILES=0
-                      for json_file in $(find . -name "*.json" -type f 2>/dev/null); do
+                      while IFS= read -r -d '' json_file; do
                         if [[ -s "$json_file" ]] && grep -q "coverage" "$json_file" 2>/dev/null; then
                           VALID_FILES=$((VALID_FILES + 1))
                         else
                           echo "    ⚠️ Removing invalid history file: $(basename "$json_file")"
                           rm -f "$json_file"
                         fi
-                      done
+                      done < <(find . -name "*.json" -type f -print0 2>/dev/null)
                       echo "    📄 Extracted $EXTRACTED_FILES files, $VALID_FILES valid history entries"
                     else
                       echo "    ⚠️ Failed to extract history-$run_id.zip (possibly corrupted)"
@@ -2281,7 +2281,7 @@ jobs:
       # --------------------------------------------------------------------
       - name: 📤 Upload performance cache statistics
         if: always()
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: cache-stats-coverage
           path: cache-stats-coverage.json
@@ -2292,7 +2292,7 @@ jobs:
       # --------------------------------------------------------------------
       - name: 📤 Upload coverage statistics
         if: always()
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: coverage-stats-internal
           path: coverage-stats-internal-*.json
@@ -2324,7 +2324,7 @@ jobs:
       - name: 📤 Upload coverage history artifacts
         # Upload history for all branches to preserve trend data
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: coverage-history-${{ inputs.commit-sha }}
           path: .github/coverage/history/*.json
@@ -2469,7 +2469,7 @@ jobs:
 
       - name: 📤 Upload coverage statistics (Codecov)
         if: always()
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: coverage-stats-codecov
           path: coverage-stats-codecov-*.json
