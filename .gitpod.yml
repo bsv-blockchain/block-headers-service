@@ -1,5 +1,5 @@
-# Gitpod workspace configuration for block-headers-service
-# Uses magex for build automation and development tasks
+# Gitpod workspace configuration for this project.
+# Uses magex for build tooling, linting, and testing.
 # This creates a one-click development environment for contributors
 
 image: gitpod/workspace-go:latest
@@ -7,35 +7,35 @@ image: gitpod/workspace-go:latest
 tasks:
   - name: setup-and-test
     init: |
-      echo "🚀 Setting up block-headers-service development environment..."
+      echo "🚀 Setting up development environment..."
       echo "📦 Installing MAGE-X build tool..."
       go install github.com/mrz1836/mage-x/cmd/magex@latest
 
-      echo "📥 Downloading dependencies..."
+      echo "🔽 Downloading dependencies..."
       magex deps:download
 
-      echo "🔧 Initial build..."
-      magex build
+      echo "🔍 Running linters..."
+      magex lint
 
       echo "✅ Running initial tests..."
       magex test
 
     command: |
       echo "==============================================="
-      echo "🎯 Welcome to block-headers-service development!"
+      echo "🎯 Welcome to development environment!"
       echo "==============================================="
       echo ""
       echo "🛠️  Available magex commands:"
       echo "  magex test       - Run all tests"
       echo "  magex lint       - Run linters"
       echo "  magex format:fix - Format the code"
-      echo "  magex build      - Build the project"
+      echo "  magex build      - Build the project (binary)"
       echo "  magex help       - List all available commands"
       echo ""
       echo "📖 Quick start:"
       echo "  1. Try: magex test"
       echo "  2. Make your changes"
-      echo "  3. Run: magex format:fix && magex lint && magex test"
+      echo "  3. Run: magex format:fix && magex lint && magex test:race"
       echo "  4. Commit and push your changes"
       echo ""
       echo "💡 For more help: magex help"

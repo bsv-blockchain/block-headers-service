@@ -632,6 +632,7 @@ jobs:
           artifact-path: "statistics-section.md"
           retention-days: "1"
           if-no-files-found: "warn"
+          continue-on-error: "true"
 
       - name: 📋 Set Output Content
         id: set-output
