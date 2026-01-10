@@ -38,7 +38,7 @@ func newMerkleRootConfirmation(
 func mapToMerkleRootsConfirmationsResponses(
 	merkleConfms []*domains.MerkleRootConfirmation,
 ) ConfirmationsResponse {
-	mrcfs := make([]MerkleRootConfirmation, 0)
+	mrcfs := make([]MerkleRootConfirmation, 0, len(merkleConfms))
 
 	confirmationState := domains.Confirmed
 

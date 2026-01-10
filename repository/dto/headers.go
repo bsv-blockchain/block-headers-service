@@ -68,7 +68,7 @@ func (dbh *DbBlockHeader) ToBlockHeader() *domains.BlockHeader {
 // used after getting records from db.
 func ConvertToBlockHeader(dbBlockHeaders []*DbBlockHeader) []*domains.BlockHeader {
 	if dbBlockHeaders != nil {
-		var blockHeaders []*domains.BlockHeader
+		blockHeaders := make([]*domains.BlockHeader, 0, len(dbBlockHeaders))
 
 		for _, header := range dbBlockHeaders {
 			h := header.ToBlockHeader()
@@ -138,7 +138,7 @@ func ConvertToMerkleRootsConfirmations(
 	dbMerkleConfms []*DbMerkleRootConfirmation,
 	maxBlockHeightExcess int,
 ) []*domains.MerkleRootConfirmation {
-	merklesConfms := make([]*domains.MerkleRootConfirmation, 0)
+	merklesConfms := make([]*domains.MerkleRootConfirmation, 0, len(dbMerkleConfms))
 
 	for _, merkleConfm := range dbMerkleConfms {
 		m := merkleConfm.ToMerkleRootConfirmation(maxBlockHeightExcess)

@@ -169,7 +169,7 @@ func (r *HeaderTestRepository) GetAncestorOnHeight(_ string, height int32) (*dom
 
 // GetAllTips returns all tips from db.
 func (r *HeaderTestRepository) GetAllTips() ([]*domains.BlockHeader, error) {
-	prevHashes := make([]string, 0)
+	prevHashes := make([]string, 0, len(*r.db))
 	tips := make([]*domains.BlockHeader, 0)
 
 	for _, h := range *r.db {
@@ -291,7 +291,7 @@ func (r *HeaderTestRepository) GetMerkleRootsConfirmations(
 	request []domains.MerkleRootConfirmationRequestItem,
 	maxBlockHeightExcess int,
 ) ([]*domains.MerkleRootConfirmation, error) {
-	mrcfs := make([]*domains.MerkleRootConfirmation, 0)
+	mrcfs := make([]*domains.MerkleRootConfirmation, 0, len(request))
 
 	topHeight := int32(0)
 	for _, h := range *r.db {

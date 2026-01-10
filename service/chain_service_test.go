@@ -305,7 +305,7 @@ func getHeadersFromThisChainUpTo(t *testing.T, c fixtures.HeaderChainFixture, r 
 }
 
 func getHeadersFromConcurrentChain(t *testing.T, r repository.Repositories) []domains.BlockHeader {
-	o := make([]domains.BlockHeader, 0)
+	o := make([]domains.BlockHeader, 0, 4)
 
 	h, err := r.Headers.GetHeaderByHash(fixtures.HashHeight1.String())
 	assert.NoError(t, err)
