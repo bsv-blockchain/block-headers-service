@@ -53,7 +53,7 @@ func newTipStateResponse(header *domains.BlockHeader) TipStateResponse {
 
 // mapToTipStateResponse maps a slice of domain BlockHeader to a slice of transport TipStateResponse.
 func mapToTipStateResponse(headers []*domains.BlockHeader) []TipStateResponse {
-	blockHeaderStatesResponse := make([]TipStateResponse, 0)
+	blockHeaderStatesResponse := make([]TipStateResponse, 0, len(headers))
 
 	for _, header := range headers {
 		blockHeaderStatesResponse = append(blockHeaderStatesResponse, newTipStateResponse(header))

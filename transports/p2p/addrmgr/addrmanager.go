@@ -335,7 +335,7 @@ func (a *AddrManager) getNewBucket(netAddr, srcAddr *wire.NetAddress) int {
 	// bitcoind:
 	// doublesha256(key + sourcegroup + int64(doublesha256(key + group + sourcegroup))%bucket_per_source_group) % num_new_buckets
 
-	data1 := []byte{}
+	data1 := make([]byte, 0, 64) //nolint:mnd // buffer size for hash data
 	data1 = append(data1, a.key[:]...)
 	data1 = append(data1, []byte(GroupKey(netAddr))...)
 	data1 = append(data1, []byte(GroupKey(srcAddr))...)
@@ -344,7 +344,7 @@ func (a *AddrManager) getNewBucket(netAddr, srcAddr *wire.NetAddress) int {
 	hash64 %= newBucketsPerGroup
 	var hashbuf [8]byte
 	binary.LittleEndian.PutUint64(hashbuf[:], hash64)
-	data2 := []byte{}
+	data2 := make([]byte, 0, 64) //nolint:mnd // buffer size for hash data
 	data2 = append(data2, a.key[:]...)
 	data2 = append(data2, GroupKey(srcAddr)...)
 	data2 = append(data2, hashbuf[:]...)
@@ -356,7 +356,7 @@ func (a *AddrManager) getNewBucket(netAddr, srcAddr *wire.NetAddress) int {
 func (a *AddrManager) getTriedBucket(netAddr *wire.NetAddress) int {
 	// bitcoind hashes this as:
 	// doublesha256(key + group + truncate_to_64bits(doublesha256(key)) % buckets_per_group) % num_buckets
-	data1 := []byte{}
+	data1 := make([]byte, 0, 64) //nolint:mnd // buffer size for hash data
 	data1 = append(data1, a.key[:]...)
 	data1 = append(data1, []byte(NetAddressKey(netAddr))...)
 	hash1 := chainhash.DoubleHashB(data1)
@@ -364,7 +364,7 @@ func (a *AddrManager) getTriedBucket(netAddr *wire.NetAddress) int {
 	hash64 %= triedBucketsPerGroup
 	var hashbuf [8]byte
 	binary.LittleEndian.PutUint64(hashbuf[:], hash64)
-	data2 := []byte{}
+	data2 := make([]byte, 0, 64) //nolint:mnd // buffer size for hash data
 	data2 = append(data2, a.key[:]...)
 	data2 = append(data2, GroupKey(netAddr)...)
 	data2 = append(data2, hashbuf[:]...)

@@ -11,7 +11,7 @@ type NetworkService struct {
 
 // GetPeers return all currently connected peers.
 func (s *NetworkService) GetPeers() []peerpkg.State {
-	peerStates := make([]peerpkg.State, 0)
+	peerStates := make([]peerpkg.State, 0, len(s.peers))
 
 	for peer := range s.peers {
 		peerStates = append(peerStates, peer.ToPeerState())

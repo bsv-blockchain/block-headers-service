@@ -62,7 +62,7 @@ func SetupRoutes(s *service.Services, cfg *config.HTTPConfig) httpserver.GinEngi
 }
 
 func toHandlers(middlewares ...router.APIMiddleware) []gin.HandlerFunc {
-	result := make([]gin.HandlerFunc, 0)
+	result := make([]gin.HandlerFunc, 0, len(middlewares))
 	for _, m := range middlewares {
 		result = append(result, m.ApplyToAPI)
 	}

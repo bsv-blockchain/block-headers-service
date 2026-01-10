@@ -41,7 +41,7 @@ func newBlockHeaderResponse(header *domains.BlockHeader) BlockHeaderResponse {
 
 // mapToBlockHeadersResponses maps a slice of domain BlockHeader to a slice of transport BlockHeaderResponse.
 func mapToBlockHeadersResponses(headers []*domains.BlockHeader) []BlockHeaderResponse {
-	blockHeadersResponse := make([]BlockHeaderResponse, 0)
+	blockHeadersResponse := make([]BlockHeaderResponse, 0, len(headers))
 
 	for _, header := range headers {
 		blockHeadersResponse = append(blockHeadersResponse, newBlockHeaderResponse(header))
