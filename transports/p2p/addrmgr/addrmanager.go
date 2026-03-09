@@ -504,7 +504,8 @@ func (a *AddrManager) HostToNetAddress(host string, port uint16, services wire.S
 		if err != nil {
 			return nil, err
 		}
-		prefix := []byte{0xfd, 0x87, 0xd8, 0x7e, 0xeb, 0x43}
+		prefix := make([]byte, 6, 6+len(data))
+		copy(prefix, []byte{0xfd, 0x87, 0xd8, 0x7e, 0xeb, 0x43})
 		ip = net.IP(append(prefix, data...))
 	} else if ip = net.ParseIP(host); ip == nil {
 		ips, err := a.lookupFunc(host)
