@@ -379,15 +379,24 @@ out:
 					}
 				}
 
+				// Update the state before firing the callback
+				// so that consumers always observe the correct
+				// state when they receive the notification.
+				retry := msg.retry &&
+					(uint32(len(conns)) < cm.cfg.TargetOutbound ||
+						connReq.Permanent)
+
+				if !msg.retry {
+					connReq.updateState(ConnDisconnected)
+				} else if retry {
+					connReq.updateState(ConnPending)
+				}
+
 				if cm.cfg.OnDisconnection != nil {
 					go cm.cfg.OnDisconnection(connReq)
 				}
 
-				// All internal state has been cleaned up, if
-				// this connection is being removed, we will
-				// make no further attempts with this request.
 				if !msg.retry {
-					connReq.updateState(ConnDisconnected)
 					continue
 				}
 
@@ -397,10 +406,7 @@ out:
 				// re added to the pending map, so that
 				// subsequent processing of connections and
 				// failures do not ignore the request.
-				if uint32(len(conns)) < cm.cfg.TargetOutbound ||
-					connReq.Permanent {
-
-					connReq.updateState(ConnPending)
+				if retry {
 					cm.log.Debug().Msgf("Reconnecting to %v", connReq)
 					pending[msg.id] = connReq
 					cm.handleFailedConn(connReq)
