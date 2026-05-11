@@ -1,4 +1,4 @@
-FROM golang:1.26.2 AS build-stage
+FROM golang:1.26.3 AS build-stage
 
 ENV GOPATH=/
 COPY ./ ./
@@ -6,7 +6,7 @@ COPY ./ ./
 RUN go mod download
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /block-headers-service ./cmd/
 
-FROM debian:sid-slim@sha256:5455a757130f8c31e13385c23ea357d449f7796f61a51b3695659fb5fa784b1b
+FROM debian:sid-slim@sha256:0d5e8ef3b1edfb232372a3c3404b54aec139f8cee58b3ade6b0777567f217b3f
 
 WORKDIR /service
 
