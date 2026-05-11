@@ -29,6 +29,12 @@ var (
 	localTimezone, _ = time.LoadLocation("Local")
 )
 
+const (
+	testMerkleRoot         = "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885"
+	testPreviousBlockHash  = "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc"
+	testCumulatedChainWork = "409554438998846785912755332"
+)
+
 func TestPrepareRecordHappyPath(t *testing.T) {
 	testCases := []testCase{
 		{
@@ -100,10 +106,10 @@ func TestPrepareRecordHappyPath(t *testing.T) {
 			name:   "newer block, should return valid block header",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"536870912", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718", "403300437", "1708954423"},
+					{"536870912", testMerkleRoot, "3035389718", "403300437", "1708954423"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -111,7 +117,7 @@ func TestPrepareRecordHappyPath(t *testing.T) {
 				Height:        833233,
 				Hash:          "00000000000000000676a9b9cdb44820a04c780ca152737124e36341b6c4cdd2",
 				Version:       536870912,
-				MerkleRoot:    "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885",
+				MerkleRoot:    testMerkleRoot,
 				Timestamp:     timestampInLocalTime("2024-02-26 14:33:43+01:00"),
 				Bits:          403300437,
 				Nonce:         3035389718,
@@ -151,10 +157,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "version out of int32 range, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"2147483648", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718", "403300437", "1708954423"},
+					{"2147483648", testMerkleRoot, "3035389718", "403300437", "1708954423"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -165,10 +171,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "nonce out of uint32 range, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"2147483646", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "4294967296", "403300437", "1708954423"},
+					{"2147483646", testMerkleRoot, "4294967296", "403300437", "1708954423"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -179,10 +185,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "bits out of uint32 range, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"2147483646", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718", "4294967296", "1708954423"},
+					{"2147483646", testMerkleRoot, "3035389718", "4294967296", "1708954423"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -193,10 +199,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "too little values in row, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"536870912", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718", "403300437"},
+					{"536870912", testMerkleRoot, "3035389718", "403300437"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -207,10 +213,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "too much values in row, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"536870912", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718", "403300437", "403300437", "403300437"},
+					{"536870912", testMerkleRoot, "3035389718", "403300437", "403300437", "403300437"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -221,10 +227,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "wrong character in version, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"536870912a", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718", "403300437", "1708954423"},
+					{"536870912a", testMerkleRoot, "3035389718", "403300437", "1708954423"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -235,10 +241,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "wrong character in nonce, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"536870912", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718a", "403300437", "1708954423"},
+					{"536870912", testMerkleRoot, "3035389718a", "403300437", "1708954423"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -250,10 +256,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "wrong character in bits, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"536870912", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718", "403300437a", "1708954423"},
+					{"536870912", testMerkleRoot, "3035389718", "403300437a", "1708954423"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -264,10 +270,10 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 			name:   "wrong character in timestamp, should return error",
 			data: testCaseData{
 				blockRecord: [][]string{
-					{"536870912", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885", "3035389718", "403300437", "1708954423a"},
+					{"536870912", testMerkleRoot, "3035389718", "403300437", "1708954423a"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
@@ -280,8 +286,8 @@ func TestPrepareRecordErrorPath(t *testing.T) {
 				blockRecord: [][]string{
 					{"536870912", "e9446d4ebeb301aeb5a2f375ac062bf3581269d783362cf066f08bbe6040a885a", "3035389718", "403300437", "1708954423a"},
 				},
-				previousBlockHash:  "0000000000000000031817e0b646350cac1b8770d6cba60717e86185cadb15cc",
-				cumulatedChainWork: "409554438998846785912755332",
+				previousBlockHash:  testPreviousBlockHash,
+				cumulatedChainWork: testCumulatedChainWork,
 				rowIndex:           833233,
 				numberOfBlocks:     1,
 			},
