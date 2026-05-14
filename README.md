@@ -44,7 +44,7 @@
     </td>
     <td align="left">
        <a href="https://github.com/bsv-blockchain/block-headers-service/graphs/contributors"><img src="https://img.shields.io/github/contributors/bsv-blockchain/block-headers-service?style=flat-square&color=orange" alt="Contributors"></a>
-       <a href="https://github.com/sponsors/bsv-blockchain"><img src="https://img.shields.io/badge/sponsor-BSV-181717.svg?logo=github&style=flat-square" alt="Sponsor"></a>
+       <a href="https://deepwiki.com/bsv-blockchain/block-headers-service"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
     </td>
   </tr>
 </table>
