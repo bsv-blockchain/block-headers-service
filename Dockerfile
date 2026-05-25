@@ -6,7 +6,7 @@ COPY ./ ./
 RUN go mod download
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /block-headers-service ./cmd/
 
-FROM debian:sid-slim@sha256:0d5e8ef3b1edfb232372a3c3404b54aec139f8cee58b3ade6b0777567f217b3f
+FROM debian:sid-slim@sha256:5b4499296ba0dd66df646195ad666987fd1a4127489578dd8800a2bbbd8b3741
 
 WORKDIR /service
 
