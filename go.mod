@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/btcsuite/go-socks v0.0.0-20170105172521-4720035b7bfd
 	github.com/centrifugal/centrifuge v0.38.0
-	github.com/centrifugal/centrifuge-go v0.11.0
+	github.com/centrifugal/centrifuge-go v0.12.0
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/dchest/uniuri v1.2.0
 	github.com/gin-contrib/cors v1.7.7
