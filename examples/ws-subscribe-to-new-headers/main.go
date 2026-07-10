@@ -133,7 +133,8 @@ Use following commands:
 	#disconnect - connect from block headers service via websocket
 	#close - close example
 
-`)
+`,
+			)
 		}
 	}
 }

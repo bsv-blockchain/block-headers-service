@@ -500,7 +500,8 @@ func (a *AddrManager) HostToNetAddress(host string, port uint16, services wire.S
 		// but Tor and bitcoind tend to user lowercase, so we switch
 		// case here.
 		data, err := base32.StdEncoding.DecodeString(
-			strings.ToUpper(host[:16]))
+			strings.ToUpper(host[:16]),
+		)
 		if err != nil {
 			return nil, err
 		}

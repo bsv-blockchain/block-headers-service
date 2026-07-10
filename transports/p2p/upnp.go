@@ -90,7 +90,8 @@ func Discover() (nat NAT, err error) {
 			"HOST: 239.255.255.250:1900\r\n" +
 			st +
 			"MAN: \"ssdp:discover\"\r\n" +
-			"MX: 2\r\n\r\n")
+			"MX: 2\r\n\r\n",
+	)
 	message := buf.Bytes()
 	answerBytes := make([]byte, 1024)
 	for i := 0; i < 3; i++ {
