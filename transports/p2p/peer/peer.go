@@ -1460,7 +1460,7 @@ func (p *Peer) queueHandler() {
 		trickleTicker = time.NewTicker(p.cfg.TrickleInterval)
 		defer trickleTicker.Stop()
 	} else {
-		trickleTicker = &time.Ticker{C: make(chan (time.Time))}
+		trickleTicker = &time.Ticker{C: make(chan time.Time)}
 	}
 
 	// We keep the waiting flag so that we know if we have a message queued
@@ -1570,7 +1570,8 @@ out:
 				if len(invMsg.InvList) >= maxInvTrickleSize {
 					waiting = queuePacket(
 						outMsg{msg: invMsg},
-						pendingMsgs, waiting)
+						pendingMsgs, waiting,
+					)
 					invMsg = wire.NewMsgInvSizeHint(uint(invSendQueue.Len()))
 				}
 
