@@ -177,7 +177,8 @@ func (a *postgreSQLAdapter) copyHeaders(reader *csv.Reader, batchSize int, previ
 			b.State,
 			b.Chainwork,
 			b.CumulatedWork,
-			b.PreviousBlock)
+			b.PreviousBlock,
+		)
 
 		if execErr != nil {
 			err = fmt.Errorf("error preparing copy statement after %d row: %v", lastRowIndex, execErr)
