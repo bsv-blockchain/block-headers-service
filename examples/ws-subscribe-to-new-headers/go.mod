@@ -2,10 +2,10 @@ module ws-subscribe-to-new-headers
 
 go 1.25.0
 
-require github.com/centrifugal/centrifuge-go v0.12.0
+require github.com/centrifugal/centrifuge-go v0.12.1
 
 require (
-	github.com/centrifugal/protocol v0.19.2 // indirect
+	github.com/centrifugal/protocol v0.21.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/jpillora/backoff v1.0.0 // indirect
@@ -16,5 +16,5 @@ require (
 	github.com/shadowspore/fossil-delta v0.0.0-20241213113458-1d797d70cbe3 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
-	google.golang.org/protobuf v1.36.11 // indirect
+	google.golang.org/protobuf v1.36.12 // indirect
 )
