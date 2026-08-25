@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/btcsuite/go-socks v0.0.0-20170105172521-4720035b7bfd
 	github.com/centrifugal/centrifuge v0.38.0
-	github.com/centrifugal/centrifuge-go v0.12.1
+	github.com/centrifugal/centrifuge-go v0.12.0
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/dchest/uniuri v1.2.0
 	github.com/gin-contrib/cors v1.7.7
@@ -50,7 +50,7 @@ require (
 	github.com/bytedance/sonic/loader v0.5.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
-	github.com/centrifugal/protocol v0.21.0 // indirect
+	github.com/centrifugal/protocol v0.19.2 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.7 // indirect
 	github.com/containerd/errdefs v1.0.0 // indirect
