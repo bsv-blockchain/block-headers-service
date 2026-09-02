@@ -1,11 +1,11 @@
 module ws-subscribe-to-new-headers
 
-go 1.25.0
+go 1.26.0
 
 require github.com/centrifugal/centrifuge-go v0.12.1
 
 require (
-	github.com/centrifugal/protocol v0.21.0 // indirect
+	github.com/centrifugal/protocol v0.22.1 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/jpillora/backoff v1.0.0 // indirect
