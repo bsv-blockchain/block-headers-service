@@ -749,7 +749,7 @@ func (s *server) upnpUpdateThread() {
 	// Go off immediately to prevent code duplication, thereafter we renew
 	// lease every 15 minutes.
 	timer := time.NewTimer(0 * time.Second)
-	lport, _ := strconv.ParseInt(config.ActiveNetParams.DefaultPort, 10, 16)
+	lport, _ := strconv.ParseInt(s.p2pConfig.GetListenPort(s.chainParams.DefaultPort), 10, 32)
 	first := true
 out:
 	for {
@@ -811,7 +811,7 @@ func newServer(chainParams *chaincfg.Params, services *service.Services,
 
 	var listeners []net.Listener
 	var err error
-	listeners, err = p2putil.InitListeners(log)
+	listeners, err = p2putil.InitListeners(log, p2pCfg.GetListenPort(chainParams.DefaultPort))
 	if err != nil {
 		return nil, err
 	}
