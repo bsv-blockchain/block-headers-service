@@ -39,6 +39,16 @@ func (c *P2PConfig) GetNetParams() *chaincfg.Params {
 	return netParams
 }
 
+// GetListenPort returns the port to listen on for inbound peer connections:
+// ListenPort when it is set, otherwise defaultPort (the network's peer port).
+func (c *P2PConfig) GetListenPort(defaultPort string) string {
+	if c != nil && c.ListenPort > 0 {
+		return strconv.Itoa(c.ListenPort)
+	}
+
+	return defaultPort
+}
+
 func getDefaultNetParams(chainType NetworkType) *chaincfg.Params {
 	switch chainType {
 	case MainNet:
