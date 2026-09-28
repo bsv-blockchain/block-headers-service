@@ -89,9 +89,10 @@ func (s *server) seedAndConnect() error {
 }
 
 func (s *server) listenAndConnect() error {
-	s.log.Info().Msgf("listening for inbound connections on port %s", s.chainParams.DefaultPort)
+	listenPort := s.config.GetListenPort(s.chainParams.DefaultPort)
+	s.log.Info().Msgf("listening for inbound connections on port %s", listenPort)
 
-	ourAddr := net.JoinHostPort("", s.chainParams.DefaultPort)
+	ourAddr := net.JoinHostPort("", listenPort)
 	listener, err := net.Listen("tcp", ourAddr)
 	if err != nil {
 		s.log.Error().Msgf("error creating listener, reason: %v", err)

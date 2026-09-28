@@ -142,6 +142,8 @@ type P2PConfig struct {
 	ChainNetType          NetworkType          `mapstructure:"chain_net_type" description:"Chain Network Type (mainnet, testnet, regtest, simnet), mainnet by default"`
 	Experimental          bool                 `mapstructure:"experimental" description:"Turns on a new (highly experimental) way of getting headers with the usage of /internal/transports/p2p instead of /transports/p2p"`
 	CustomPeerDiscovery   *CustomPeerDiscovery `mapstructure:"custom_peer_discovery" description:"Custom peer discovery, e.g. when running a local regression network"`
+	// ListenPort is the port to listen on for inbound peer connections.
+	ListenPort int `mapstructure:"listen_port" description:"Port to listen on for inbound peer connections; 0 uses the network's default port (8333 on mainnet), which conflicts with a bitcoind on the same host"`
 }
 
 // Custom peer discovery, e.g. when running a local regression network.
@@ -197,6 +199,23 @@ func (c *AppConfig) WithoutAuthorization() *AppConfig {
 func (c *AppConfig) Validate() error {
 	if err := c.Db.Validate(); err != nil {
 		return err
+	}
+
+	if err := c.P2P.Validate(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Validate validates the P2P configuration.
+func (c *P2PConfig) Validate() error {
+	if c == nil {
+		return nil
+	}
+
+	if c.ListenPort < 0 || c.ListenPort > 65535 {
+		return fmt.Errorf("p2p: listen_port must be between 0 and 65535, got %d", c.ListenPort)
 	}
 
 	return nil

@@ -7,16 +7,14 @@ import (
 	"strings"
 
 	"github.com/rs/zerolog"
-
-	"github.com/bsv-blockchain/block-headers-service/config"
 )
 
-// InitListeners initializes the configured net listeners and adds any bound
+// InitListeners initializes net listeners on the given port and adds any bound
 // addresses to the address manager. Returns the listeners and a NAT interface,
 // which is non-nil if UPnP is in use.
-func InitListeners(log *zerolog.Logger) ([]net.Listener, error) {
+func InitListeners(log *zerolog.Logger, port string) ([]net.Listener, error) {
 	listenAddrs := []string{
-		net.JoinHostPort("", config.ActiveNetParams.DefaultPort),
+		net.JoinHostPort("", port),
 	}
 
 	// Listen for TCP connections at the configured addresses

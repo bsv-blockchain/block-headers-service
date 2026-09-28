@@ -283,6 +283,11 @@ Connect to Testnet:
 BHS_P2P_CHAIN_NET_TYPE=testnet
 ```
 
+Listen for inbound peers on a port other than the network default (8333 on mainnet), e.g. alongside a bitcoind on the same host:
+```bash
+BHS_P2P_LISTEN_PORT=18333
+```
+
 </details>
 
 <details>

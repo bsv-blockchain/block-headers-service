@@ -8,6 +8,7 @@ package p2p
 import (
 	"errors"
 	"fmt"
+	"math"
 	"net"
 	"strconv"
 	"sync"
@@ -745,11 +746,36 @@ func (s *server) WaitForShutdown() {
 	s.wg.Wait()
 }
 
+// advertiseUPnPAddress adds the router's external address, with the port it
+// mapped, as a local address. It returns an error only when the external
+// address can't be looked up.
+func (s *server) advertiseUPnPAddress(mappedPort int, listenPort uint16) error {
+	// TODO: look this up periodically to see if upnp domain changed
+	// and so did ip.
+	externalip, err := s.nat.GetExternalAddress()
+	if err != nil {
+		s.log.Warn().Msgf("UPnP can't get external address: %v", err)
+		return err
+	}
+	// The router reports the mapped port; fall back to our own if it is out of range.
+	port := listenPort
+	if mappedPort > 0 && mappedPort <= math.MaxUint16 {
+		port = uint16(mappedPort)
+	}
+	na := wire.NewNetAddressIPPort(externalip, port, s.wireServices)
+	if err := s.addrManager.AddLocalAddress(na, addrmgr.UpnpPrio); err != nil {
+		s.log.Warn().Msgf("can't add local address: %v", err)
+	}
+	s.log.Warn().Msgf("Successfully bound via UPnP to %s", addrmgr.NetAddressKey(na))
+	return nil
+}
+
 func (s *server) upnpUpdateThread() {
 	// Go off immediately to prevent code duplication, thereafter we renew
 	// lease every 15 minutes.
 	timer := time.NewTimer(0 * time.Second)
-	lport, _ := strconv.ParseInt(config.ActiveNetParams.DefaultPort, 10, 16)
+	// A 16-bit unsigned parse covers every valid port; the config validates it.
+	lport, _ := strconv.ParseUint(s.p2pConfig.GetListenPort(s.chainParams.DefaultPort), 10, 16)
 	first := true
 out:
 	for {
@@ -766,20 +792,9 @@ out:
 				s.log.Warn().Msgf("can't add UPnP port mapping: %v", err)
 			}
 			if first && err == nil {
-				// TODO: look this up periodically to see if upnp domain changed
-				// and so did ip.
-				externalip, err := s.nat.GetExternalAddress()
-				if err != nil {
-					s.log.Warn().Msgf("UPnP can't get external address: %v", err)
+				if err := s.advertiseUPnPAddress(listenPort, uint16(lport)); err != nil {
 					continue out
 				}
-				na := wire.NewNetAddressIPPort(externalip, uint16(listenPort),
-					s.wireServices)
-				err = s.addrManager.AddLocalAddress(na, addrmgr.UpnpPrio)
-				if err != nil {
-					s.log.Warn().Msgf("can't add local address: %v", err)
-				}
-				s.log.Warn().Msgf("Successfully bound via UPnP to %s", addrmgr.NetAddressKey(na))
 				first = false
 			}
 			timer.Reset(time.Minute * 15)
@@ -811,7 +826,7 @@ func newServer(chainParams *chaincfg.Params, services *service.Services,
 
 	var listeners []net.Listener
 	var err error
-	listeners, err = p2putil.InitListeners(log)
+	listeners, err = p2putil.InitListeners(log, p2pCfg.GetListenPort(chainParams.DefaultPort))
 	if err != nil {
 		return nil, err
 	}

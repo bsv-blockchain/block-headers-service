@@ -37,6 +37,10 @@ p2p:
   chain_net_type: mainnet
   # Use experimental new refactored p2p communication
   experimental: false
+  # Port to listen on for inbound peer connections; 0 uses the network's default
+  # port (8333 on mainnet). Set it to run alongside a bitcoind on the same host.
+  # Environment variable: BHS_P2P_LISTEN_PORT
+  listen_port: 0
   # Custom peer discovery, e.g. when running a local regression network
   custom_peer_discovery:
     # Use default values when not enabled
