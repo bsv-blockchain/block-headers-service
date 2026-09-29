@@ -8,12 +8,12 @@ require (
 	github.com/centrifugal/centrifuge-go v0.12.1
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/dchest/uniuri v1.2.0
-	github.com/gin-contrib/cors v1.7.8
+	github.com/gin-contrib/cors v1.7.9
 	github.com/gin-gonic/gin v1.12.0
 	github.com/golang-migrate/migrate/v4 v4.20.1
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/kinbiko/jsonassert v1.2.0
-	github.com/klauspost/compress v1.20.0
+	github.com/klauspost/compress v1.20.1
 	github.com/kr/pretty v0.3.1
 	github.com/lib/pq v1.12.3
 	github.com/magiconair/properties v1.18.12
