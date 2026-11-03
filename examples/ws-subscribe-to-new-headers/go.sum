@@ -1,5 +1,7 @@
-github.com/centrifugal/centrifuge-go v0.12.1 h1:nvk5y6/TYGqa2ysQ0+qkcS5DTVC0jTITkDVk2wKXTqc=
-github.com/centrifugal/centrifuge-go v0.12.1/go.mod h1:YkU4klP3EyPLbSP/5eb2+w9S7Swv2gw73hYnSrcVnB8=
+github.com/centrifugal/centrifuge-go v0.13.0 h1:4Q7fZ5wYeuLQh+ufREUjqxr63IXTyyvSeNgrjB/1fZI=
+github.com/centrifugal/centrifuge-go v0.13.0/go.mod h1:sSWsBmJGXHwxW0HeW74WE675YJJKRVcjGDCcr+AkQug=
+github.com/centrifugal/fdelta v0.0.3 h1:sYD/zCXH2xYDcELPPztXsF7VCZb6vtiRBEVCYjgzHj4=
+github.com/centrifugal/fdelta v0.0.3/go.mod h1:9coq4YBCDBGhScGS9KcKeGSW9xQ+Kzq3tcFiK0n5OcE=
 github.com/centrifugal/protocol v0.23.1 h1:UUawQRfk6w8vovblEgx27vUfPE40KO3CHdzhhu4Sg58=
 github.com/centrifugal/protocol v0.23.1/go.mod h1:K8qKv/y8ujLbYYN/orINUBaKDMmjTrpE9++vFT6x68E=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
@@ -8,8 +10,6 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/jpillora/backoff v1.0.0 h1:uvFg412JmmHBHw7iwprIxkPMI+sGQ4kzOWsMeHnm2EA=
 github.com/jpillora/backoff v1.0.0/go.mod h1:J/6gKK9jxlEcS3zixgDgUAsiuZ7yrSoa/FX5e0EB2j4=
-github.com/shadowspore/fossil-delta v0.0.0-20241213113458-1d797d70cbe3 h1:/4/IJi5iyTdh6mqOUaASW148HQpujYiHl0Wl78dSOSc=
-github.com/shadowspore/fossil-delta v0.0.0-20241213113458-1d797d70cbe3/go.mod h1:aJIMhRsunltJR926EB2MUg8qHemFQDreSB33pyto2Ps=
 github.com/stretchr/testify v1.12.1 h1:EuwCh5fleGS7H32xRwO3wRGT7DxrDhLAT6FF8MpWDWE=
 github.com/stretchr/testify v1.12.1/go.mod h1:MDEgiDPPsNp5cuIrHPPCyornHKgEVbtFUmoNlxoYthg=
 go.yaml.in/yaml/v3 v3.0.5 h1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=
