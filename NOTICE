@@ -1,0 +1,6 @@
+block-headers-service
+Copyright 2021-2026 BSV Association
+
+This product includes software from these projects, under their own licenses:
+- btcd (cmd, internal/chaincfg, internal/wire, transports/p2p): Copyright (c) 2013-2018 The btcsuite developers (ISC)
+- dcrd (internal/chaincfg, transports/p2p): Copyright (c) 2015-2018 The Decred developers (ISC)
