@@ -122,8 +122,10 @@ permissions: {}
 #   GitHub keeps one pending job per group: the last apply to arrive replaces
 #   one still waiting. That isn't always the freshest evaluation: a revocation
 #   that skips `analyze` can arrive before an older commit's slower approval.
-#   So an approval whose head moved during its analysis never joins the queue
-#   (it would only skip), and every apply re-checks the head before acting.
+#   So an approval, or a skip-untrusted-actor revocation (whose apply can keep
+#   an approval), whose head moved or whose PR was retargeted during its
+#   analysis never joins the queue, nor does an approval whose PR couldn't be
+#   re-read; and every apply re-checks the head and base before acting.
 # --------------------------------------------------------------------
 
 # --------------------------------------------------------------------
@@ -633,8 +635,10 @@ jobs:
       action: ${{ steps.guard.outputs.action || needs.verify.outputs.result }}
       manual-review-label: ${{ steps.config.outputs.manual-review-label }}
       auto-merge-labels: ${{ steps.config.outputs.auto-merge-labels }}
-      # "true" only for an approval whose head moved during the analysis
-      head-moved: ${{ steps.head.outputs.head-moved }}
+      # "true" only for an approval or a skip-untrusted-actor revocation whose
+      # head moved or whose PR was retargeted during the analysis, or for an
+      # approval whose PR couldn't be re-read
+      stale: ${{ steps.head.outputs.stale }}
 
     steps:
       # --------------------------------------------------------------------
@@ -1298,9 +1302,10 @@ jobs:
       #   5. Only runs Dependabot itself triggered may approve: the trigger
       #      run's actor (GitHub's workflow_run payload) is dependabot[bot].
       #      Checked last: `apply` keeps an App approval of the current head
-      #      when only this guard fails, so a run someone else triggered (a
-      #      retarget, a reopen) must first find the commits and the CURRENT
-      #      base's rules sound. A base that fails revokes it.
+      #      when only this guard fails (and the PR still targets the base
+      #      checked here), so a run someone else triggered (a retarget, a
+      #      reopen) must first find the commits and the CURRENT base's rules
+      #      sound. A base that fails revokes it.
       # Any action other than auto-merge-* also makes `apply` revoke a bot
       # approval and auto-merge left by an earlier evaluation, so a later push
       # (by Dependabot or anyone else) never rides an approval of older content.
@@ -1810,29 +1815,53 @@ jobs:
           echo "✅ Analysis completed!"
 
       # --------------------------------------------------------------------
-      # Last, and for an approval only: is the PR still on the analyzed commit?
-      # If not, `apply` would only end in skipped-head-moved, but joining its
-      # queue would still replace the pending apply of the current head (GitHub
-      # keeps one pending job per group: the last to arrive, not the freshest
-      # evaluation). So it stays out. Revocations always go ahead. Never fails
-      # the job (that would turn the decision into a revoke): an unreadable PR
-      # changes nothing, and `apply` re-checks the head itself.
+      # Last, for an approval or a skip-untrusted-actor revocation (whose apply
+      # can keep an App approval of the head): is the PR still on the analyzed
+      # commit and base? If not, `apply` would only skip (an approval) or revoke
+      # on stale grounds, even a newer evaluation's approval, and joining its
+      # queue would still replace the pending apply of the newer evaluation
+      # (GitHub keeps one pending job per group: the last to arrive, not the
+      # freshest evaluation). A retarget keeps the head, and its own evaluation
+      # may skip `analyze` (e.g. manual-no-metadata), leaving this one running
+      # to displace its revocation. So it stays out. So does an approval when
+      # the PR can't be re-read (fail closed: re-run to retry), while a
+      # revocation then goes ahead: `apply` keeps an approval only on the head
+      # and base this run verified. Other revocations always go ahead, and
+      # `apply` keeps no approval for them. Never fails the job (that would
+      # turn the decision into a revoke).
       # --------------------------------------------------------------------
-      - name: 📌 Confirm the head before approving
+      - name: 📌 Confirm the head and base before approving or keeping an approval
         id: head
-        if: startsWith(steps.guard.outputs.action, 'auto-merge-')
+        if: startsWith(steps.guard.outputs.action, 'auto-merge-') || steps.guard.outputs.action == 'skip-untrusted-actor'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
+          ACTION: ${{ steps.guard.outputs.action }}
           VERIFIED_SHA: ${{ needs.verify.outputs.head-sha }}
+          VERIFIED_BASE: ${{ needs.verify.outputs.base-ref }}
         run: |
-          if CURRENT_SHA=$(gh api "repos/$REPO/pulls/$PR_NUMBER" --jq '.head.sha' 2>/dev/null) &&
-             [[ -n "$CURRENT_SHA" && "$CURRENT_SHA" != "$VERIFIED_SHA" ]]; then
-            echo "⏭️ Head moved from $VERIFIED_SHA to $CURRENT_SHA — no approval; the run for the new commit decides"
-            echo "head-moved=true" >> "$GITHUB_OUTPUT"
-            echo "⏭️ Not approved: the PR moved on to \`$CURRENT_SHA\` during the analysis; the run for that commit decides." >> "$GITHUB_STEP_SUMMARY"
+          if [[ "$ACTION" == auto-merge-* ]]; then NOT_APPLIED="Not approved"; else NOT_APPLIED="Not applied"; fi
+          # One read for both; branch names can't contain spaces, so the line splits cleanly
+          if PR_REF=$(gh api "repos/$REPO/pulls/$PR_NUMBER" --jq '"\(.head.sha) \(.base.ref)"' 2>/dev/null) &&
+             read -r CURRENT_SHA CURRENT_BASE <<< "$PR_REF" && [[ -n "$CURRENT_SHA" ]]; then
+            if [[ "$CURRENT_SHA" != "$VERIFIED_SHA" ]]; then
+              echo "⏭️ Head moved from $VERIFIED_SHA to $CURRENT_SHA — $ACTION stays out of the apply queue; the run for the new commit decides"
+              echo "stale=true" >> "$GITHUB_OUTPUT"
+              echo "⏭️ $NOT_APPLIED: the PR moved on to \`$CURRENT_SHA\` during the analysis; the run for that commit decides." >> "$GITHUB_STEP_SUMMARY"
+            elif [[ "$CURRENT_BASE" != "$VERIFIED_BASE" ]]; then
+              echo "⏭️ Base changed from ${VERIFIED_BASE:-<unknown>} to $CURRENT_BASE — $ACTION stays out of the apply queue; the run for the retarget decides"
+              echo "stale=true" >> "$GITHUB_OUTPUT"
+              echo "⏭️ $NOT_APPLIED: the PR was retargeted to \`$CURRENT_BASE\` during the analysis; the run for the retarget decides." >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "✅ PR #$PR_NUMBER is still at $VERIFIED_SHA on $VERIFIED_BASE"
+            fi
+          elif [[ "$ACTION" == auto-merge-* ]]; then
+            # Unconfirmed is stale: queued anyway, it could displace a pending revocation
+            echo "::warning title=Dependabot PR #$PR_NUMBER not approved::Couldn't re-read the PR to confirm its head and base, so the approval stays out of the apply queue. Re-run this workflow to retry."
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+            echo "⚠️ Not approved: couldn't re-read the PR to confirm its head and base. Re-run this workflow to retry." >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "✅ PR #$PR_NUMBER is still at $VERIFIED_SHA (or unreadable: the apply job re-checks)"
+            echo "⚠️ Couldn't re-read PR #$PR_NUMBER — revoking anyway; the apply job keeps an approval only on $VERIFIED_SHA and ${VERIFIED_BASE:-<unknown>}"
           fi
 
   # ----------------------------------------------------------------------------------
@@ -1848,9 +1877,10 @@ jobs:
   #             auto-merge after a push by someone else), then dismiss the App's
   #             approvals. Only ever on a same-repo Dependabot PR. A failed call
   #             doesn't skip the rest: everything is attempted, then the job fails
-  #             and the PR comment says what's left. Once the head has moved, a
-  #             newer evaluation decides it: an App approval of the current head
-  #             stands, and only authorization for older commits is revoked.
+  #             and the PR comment says what's left. Only an evaluation of the
+  #             current head and base that failed nothing but the actor guard
+  #             keeps an App approval of that head; any other revokes it too,
+  #             including one that judged an older head or base (fail closed).
   #
   # SECURITY: this is the only job that can read the App private key. Every step in
   # a job can read every secret the job uses (they sit in the runner's memory), so
@@ -1867,13 +1897,16 @@ jobs:
     needs: [verify, analyze]
     # No successful analysis needed: revoking must hold even if `analyze` fails,
     # which would otherwise leave an earlier approval + auto-merge armed. Approving
-    # requires one (see DECISION). An approval whose head moved during the
-    # analysis stays out of the queue (see "Confirm the head before approving").
+    # requires one (see DECISION). An approval or a skip-untrusted-actor
+    # revocation whose head moved or whose PR was retargeted during the
+    # analysis, or an approval whose PR couldn't be re-read, stays out of the
+    # queue (see "Confirm the head and base before approving or keeping an
+    # approval").
     if: |
       !cancelled() &&
       vars.AUTO_MERGE_APP_CLIENT_ID != '' &&
       contains(fromJSON('["analyze", "revoke-foreign-push", "manual-no-metadata", "revoke-unverified"]'), needs.verify.outputs.result) &&
-      needs.analyze.outputs.head-moved != 'true'
+      needs.analyze.outputs.stale != 'true'
     runs-on: ubuntu-26.04
     timeout-minutes: 5
     # Queue, never cancel: see "Concurrency Control" at the top
@@ -2103,6 +2136,7 @@ jobs:
           fi
           STATE=$(jq -r '.state' <<< "$PR_JSON")
           CURRENT_SHA=$(jq -r '.head.sha' <<< "$PR_JSON")
+          CURRENT_BASE=$(jq -r '.base.ref // ""' <<< "$PR_JSON")
           ARMED_BY=$(jq -r 'if .auto_merge == null then "" else (.auto_merge.enabled_by.login // "unknown") end' <<< "$PR_JSON")
           AUTHOR=$(jq -r '.user.login // ""' <<< "$PR_JSON")
           HEAD_REPO=$(jq -r '.head.repo.full_name // ""' <<< "$PR_JSON")
@@ -2132,13 +2166,20 @@ jobs:
           fi
 
           # An App approval of the current head was made by an evaluation that
-          # Dependabot triggered and that verified that exact commit. It stands when
-          # this run judged other content (the head has moved since), or when only
-          # who triggered this run is in question (skip-untrusted-actor: the actor
-          # guard runs last, so the commits and the current base's rules passed).
-          # Unreadable reviews can't show one, so the arming is revoked below
-          # (fail closed).
-          if [[ "$CURRENT_SHA" != "$VERIFIED_SHA" || "$ACTION" == "skip-untrusted-actor" ]]; then
+          # Dependabot triggered and that verified that exact commit on the base
+          # the PR targeted then (the review records the commit, not the base). It
+          # stands only when this run vouches for that commit on the current base:
+          # only who triggered this run is in question (skip-untrusted-actor: the
+          # actor guard runs last, so the commits and the verified base's rules
+          # passed), on the head and base this run verified. A run that judged
+          # another commit or base vouches for nothing, and it may have displaced
+          # the newer evaluation's own revocation in the queue (e.g. a retarget's,
+          # which skips `analyze` and its stale check), so it revokes an approval
+          # of the current head too. Fail closed: re-running the latest evaluation
+          # restores a sound one. Unreadable reviews can't show one, so the arming
+          # is revoked below.
+          if [[ "$CURRENT_SHA" == "$VERIFIED_SHA" && "$ACTION" == "skip-untrusted-actor" &&
+                -n "$VERIFIED_BASE" && "$CURRENT_BASE" == "$VERIFIED_BASE" ]]; then
             if grep -q " $CURRENT_SHA\$" <<< "$APPROVALS"; then
               echo "✅ $APP_BOT approved the current head $CURRENT_SHA in an evaluation Dependabot triggered — nothing to revoke"
               outcome kept-current
@@ -2146,11 +2187,11 @@ jobs:
             elif [[ "$REVIEWS_READ" != "true" ]]; then
               echo "⚠️ Can't check for an App approval of the current head $CURRENT_SHA, so revoking anyway"
             fi
-          fi
-          if [[ "$CURRENT_SHA" != "$VERIFIED_SHA" && "$REVIEWS_READ" == "true" ]]; then
-            echo "📌 Head moved from $VERIFIED_SHA to $CURRENT_SHA, which no App approval covers yet"
           elif [[ "$CURRENT_SHA" != "$VERIFIED_SHA" ]]; then
-            echo "📌 Head moved from $VERIFIED_SHA to $CURRENT_SHA"
+            echo "📌 Head moved from $VERIFIED_SHA to $CURRENT_SHA since this evaluation, so no App approval is kept (re-run the latest run for $CURRENT_SHA to re-evaluate it)"
+            WHY="$WHY, and the PR has since moved on to ${CURRENT_SHA:0:7}, which this evaluation can't vouch for"
+          elif [[ "$ACTION" == "skip-untrusted-actor" ]]; then
+            echo "📌 Base changed from ${VERIFIED_BASE:-<unknown>} to ${CURRENT_BASE:-<unknown>} since this evaluation, so no App approval is kept"
           fi
 
           # 1. Disarm first: that alone stops the automatic merge, whatever the
