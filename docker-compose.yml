@@ -4,7 +4,7 @@ services:
 
   db:
     container_name: p2p-headers-db
-    image: postgres:18
+    image: postgres:19
     expose:
       - 5432
     ports:
